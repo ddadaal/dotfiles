@@ -1,5 +1,7 @@
 # initialization for zsh
-# Need to have zsh installed
+
+# Install zsh
+sudo pacman -S zsh --needed
 
 # Install oh-my-zsh
 if ! [ -d ~/.oh-my-zsh ]; then
