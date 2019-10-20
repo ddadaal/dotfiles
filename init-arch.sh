@@ -1,12 +1,12 @@
 # Must run with sudo
 if [[ $EUID -ne 0 ]]; then
-	echo This script must be run as root
+	echo This script must be run as root.
 	exit 1
 fi
 
 echo Setting pacman mirror...
-if which pacman-mirrors > /dev/null; then
-    	echo pacman-mirrors exists. using it to generate mirrors
+if which pacman-mirrors 1>/dev/null 2>&1; then
+    echo pacman-mirrors exists. using it to generate mirrors
 	pacman-mirrors -i -c China -m rank
 else
 	echo pacman-mirrors does not exist. it is likely to be WSL, modifying the mirrorlist directly...
@@ -36,11 +36,14 @@ echo Add user? Type n to cancel, or type username or use default username: daach
 read input
 
 if [ "$input" != "n" ]; then
-	if [ -z "$input" ]; then
-		input=daacheen
-	fi
-	echo Add user $input...
-	useradd -m $input
+	input=${input:-daacheen}
+	echo Press to any key to edit sudoers file.
+	echo Uncomment the line starting with %wheel...
+	read
+	visudo 
+	echo Add user $input to group wheel...
+	useradd -m $input -G wheel
+	echo "Set password for $input"
 	passwd $input
 fi
 
