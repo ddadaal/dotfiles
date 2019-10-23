@@ -11,9 +11,12 @@ sudo pacman -S rofi --needed
 echo "Install font-awesome..."
 sudo pacman -S ttf-font-awesome --needed
 
+echo "Install dejavu..."
+sudo pacman -S ttf-dejavu --needed
+
 echo "Copying i3 config..."
-cp ~/.i3/config ~/.i3/config.backup
-cp .i3/config ~/.i3
+cp ~/.config/i3/config ~/.config/i3/config.backup
+cp .i3/config ~/.config/i3
 
 echo "Copying .profile..."
 cp ~/.profile ~/.profile.backup
