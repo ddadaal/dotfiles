@@ -21,6 +21,9 @@ else
 	echo "Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch" >> /etc/pacman.conf
 fi
 
+echo Setting color output for pacman...
+sed -i 's:#Color:Color:g' /etc/pacman.conf
+
 echo Update pacman sources...
 pacman -Syy
 

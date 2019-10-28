@@ -1,6 +1,14 @@
 # Configure i3 with
+#   - fonts includiing source code pro and wqy chinese fonts
 #   - alacritty as the default terminal
 #   - rofi as the application launcher
+
+echo "Install fonts..."
+sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-han-sans-cn-fonts ttf-monaco --needed
+
+echo "Install fcitx and input methods..."
+sudo pacman -S fcitx fcitx-im fcitx-ui-light fcitx-libpinyin
+cp .xprofile ~
 
 echo "Install and configure alacritty..."
 sudo pacman -S alacritty --needed
