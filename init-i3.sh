@@ -1,5 +1,6 @@
 # Configure i3 with
 #   - fonts includiing source code pro and wqy chinese fonts
+#   - fcits as input method
 #   - alacritty as the default terminal
 #   - rofi as the application launcher
 
@@ -7,7 +8,7 @@ echo "Install fonts..."
 sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-han-sans-cn-fonts ttf-monaco --needed
 
 echo "Install fcitx and input methods..."
-sudo pacman -S fcitx fcitx-im fcitx-ui-light fcitx-libpinyin
+sudo pacman -S fcitx fcitx-im fcitx-libpinyin
 cp .xprofile ~
 
 echo "Install and configure alacritty..."
@@ -24,7 +25,7 @@ sudo pacman -S ttf-dejavu --needed
 
 echo "Copying i3 config..."
 cp ~/.config/i3/config ~/.config/i3/config.backup
-cp .i3/config ~/.config/i3
+cp i3config ~/.config/i3
 
 echo "Copying .profile..."
 cp ~/.profile ~/.profile.backup
