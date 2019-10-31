@@ -1,35 +1,39 @@
 # Configure i3 with
 #   - fonts includiing source code pro and wqy chinese fonts
 #   - fcits as input method
-#   - alacritty as the default terminal
+#   - urxvt as the default terminal
+#   - correct Xresources including urxvt config and dpi settings
 #   - rofi as the application launcher
+#   - firefox as the default browser
 
 echo "Install fonts..."
-sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-han-sans-cn-fonts ttf-monaco --needed
+sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-han-sans-cn-fonts ttf-monaco ttf-font-awesome ttf-dejavu --needed
 
 echo "Install fcitx and input methods..."
-sudo pacman -S fcitx fcitx-im fcitx-libpinyin
+sudo pacman -S fcitx fcitx-im fcitx-libpinyin --needed
 cp .xprofile ~
 
-echo "Install and configure alacritty..."
-sudo pacman -S alacritty --needed
+echo "Install firefox..."
+sudo pacman -S firefox --needed
 
 echo "Install and configure rofi..."
 sudo pacman -S rofi --needed
-
-echo "Install font-awesome..."
-sudo pacman -S ttf-font-awesome --needed
-
-echo "Install dejavu..."
-sudo pacman -S ttf-dejavu --needed
 
 echo "Copying i3 config..."
 cp ~/.config/i3/config ~/.config/i3/config.backup
 cp i3config ~/.config/i3
 
+echo "Copying i3 status config"
+mkdir ~/.config/i3status
+cp i3statusconfig ~/.config/i3status/config
+
 echo "Copying .profile..."
 cp ~/.profile ~/.profile.backup
 cp .profile ~
+
+echo "Copying .Xresources..."
+cp .Xresources ~
+xrdb ~/.Xresources
 
 echo "Reload i3..."
 i3-msg reload

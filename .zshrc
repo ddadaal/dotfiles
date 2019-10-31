@@ -72,6 +72,23 @@ plugins=(git zsh-autosuggestions yarn web-search zsh-syntax-highlighting z)
 
 source $ZSH/oh-my-zsh.sh
 
+# Init cargo env
+source ~/.cargo/env 
+
+# Init nvm env
+if [ -s "$HOME/.nvm/nvm.sh" ] && [ ! "$(type -f __init_nvm)" = function ]; then
+	export NVM_DIR="$HOME/.nvm"
+	[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+	declare -a __node_commands=(nvm `find -L $NVM_DIR/versions/*/*/bin -type f -exec basename {} \; | sort -u`)
+	function __init_nvm() {
+		for i in "${__node_commands[@]}"; do unalias $i; done
+		. "$NVM_DIR"/nvm.sh
+		unset __node_commands
+		unset -f __init_nvm
+	}
+	for i in "${__node_commands[@]}"; do alias $i='__init_nvm && '$i; done
+fi
+	
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -99,4 +116,5 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias zshconfig="vim ~/.zshrc"
+alias i3config="vim ~/.i3/config"
 alias la="ls -al"
