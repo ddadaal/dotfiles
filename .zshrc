@@ -117,4 +117,3 @@ fi
 
 alias zshconfig="vim ~/.zshrc"
 alias i3config="vim ~/.config/i3/config"
-alias la="ls -al"
