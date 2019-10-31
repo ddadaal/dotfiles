@@ -7,7 +7,7 @@
 #   - firefox as the default browser
 
 echo "Install fonts..."
-sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-han-sans-cn-fonts ttf-monaco ttf-font-awesome ttf-dejavu --needed
+sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-han-sans-cn-fonts ttf-font-awesome ttf-dejavu --needed
 
 echo "Install fcitx and input methods..."
 sudo pacman -S fcitx fcitx-im fcitx-libpinyin --needed
@@ -21,7 +21,8 @@ sudo pacman -S rofi --needed
 
 echo "Copying i3 config..."
 cp ~/.config/i3/config ~/.config/i3/config.backup
-cp i3config ~/.config/i3
+mkdir ~/.config/i3
+cp i3config ~/.config/i3/config
 
 echo "Copying i3 status config"
 mkdir ~/.config/i3status
