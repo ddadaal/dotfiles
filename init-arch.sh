@@ -35,11 +35,11 @@ pacman -S archlinuxcn-keyring --needed
 echo Install packages...
 pacman -Syuu
 
-echo Add user? Type n to cancel, or type username or use default username: daacheen
+echo Add user? Type n to cancel, or type username or use default username: da
 read input
 
 if [ "$input" != "n" ]; then
-	input=${input:-daacheen}
+	input=${input:-da}
 	echo Press to any key to edit sudoers file.
 	echo Uncomment the line starting with %wheel...
 	read
