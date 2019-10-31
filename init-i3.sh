@@ -10,7 +10,7 @@ echo "Install fonts..."
 sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-han-sans-cn-fonts ttf-font-awesome ttf-dejavu --needed
 
 echo "Install fcitx and input methods..."
-sudo pacman -S fcitx fcitx-im fcitx-libpinyin --needed
+sudo pacman -S fcitx fcitx-configtool fcitx-im fcitx-libpinyin --needed
 cp .xprofile ~
 
 echo "Install firefox..."
