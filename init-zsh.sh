@@ -1,5 +1,11 @@
 # initialization for zsh
 
+# Prevent running script as root
+if [ "$EUID" -eq 0 ]; then
+	echo "Please don't run this script as root."
+	exit
+fi
+
 # Install git and zsh
 sudo pacman -S git zsh --needed
 
