@@ -17,7 +17,7 @@ echo Setting up archlinuxcn...
 if grep -Fxq "[archlinuxcn]" /etc/pacman.conf; then
 	echo "archlinuxcn already set up"
 else
-	echo "[archlinuxcn]" >> /etc/pacmac.conf
+	echo "[archlinuxcn]\n" >> /etc/pacmac.conf
 	echo "Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch" >> /etc/pacman.conf
 fi
 
@@ -35,11 +35,11 @@ pacman -S archlinuxcn-keyring --needed
 echo Install packages...
 pacman -Syuu
 
-echo Add user? Type n to cancel, or type username or use default username: da
+echo Add user? Type n to cancel, or type username or use default username: ddadaal
 read input
 
 if [ "$input" != "n" ]; then
-	input=${input:-da}
+	input=${input:-ddadaal}
 	echo Press to any key to edit sudoers file.
 	echo Uncomment the line starting with %wheel...
 	read
