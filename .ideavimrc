@@ -1,0 +1,4 @@
+set easymotion
+set surround
+set vim-multiple-cursors
+:map gh :action ShowErrorDescription<CR>
