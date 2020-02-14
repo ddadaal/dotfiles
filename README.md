@@ -4,8 +4,10 @@ This is my dotfiles and configuration scripts.
 
 ## Includes
 
-- neovim
-  - [init.vim](init.vim)
+- [neovim](nvim)
+  - [init.vim](nvim/init.vim) 
+  - [ginit.vim](nvim/ginit.vim)
+  - [Windows Context Menu Registration](nvim/nvim.reg)
 - Jetbrains vim rc
   - [.ideavimrc](.ideavimrc)
 - i3
