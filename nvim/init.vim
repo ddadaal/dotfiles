@@ -42,6 +42,9 @@ map <C-l> <C-W>l
 " Ctrl A to open NERDTree, CD: set tree node to CWD
 map <C-A> :NERDTreeToggle<CR>
 
+" Ctrl Enter to enter terminal
+map <C-Enter> :Term<CR>
+
 " :Cdh to cd to the file folder
 command! Cdh :cd %:h
 
