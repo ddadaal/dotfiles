@@ -34,11 +34,23 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/zoom.vim'
 Plug 'jiangmiao/auto-pairs'
 
+Plug 'vim-scripts/vim-auto-save'
+
+" Disable search highlight after search
+Plug 'romainl/vim-cool'
+
 call plug#end()
 
 set showmatch
 set number
 colorscheme codedark
+
+" Show search count
+let g:CoolTotalMatches = 1
+
+" Enable auto save, and disable it in insert mode
+let g:auto_save = 1
+let g:auto_save_in_insert_mode = 0
 
 " Move pane in order
 map <C-j> <C-W>j
@@ -58,6 +70,10 @@ command! Cdh :cd %:h
 
 " :Nconf to open init.vim
 command! Nconf :e $MYVIMRC
+
+" :Bc or Alt-q to close current buffer and show another
+command! Bc :bp | bd#
+map <A-q> :Bc<CR>
 
 " autoindent and smartindent
 set autoindent
