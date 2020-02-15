@@ -23,7 +23,9 @@ This is my dotfiles and configuration scripts.
   - [init script](init-yay.sh)
 - Arch mainly used in WSL
   - [init script](init-arch.sh)
-- 
+- Windows Terminal
+  - [Windows Context Menu Registration](wt/wt.reg)
+  - Need to change the default profile's startingDirectory to `.`
 
 ## Tips
 
