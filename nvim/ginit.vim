@@ -1,6 +1,7 @@
-:call GuiClipboard()
-GuiFont! CaskaydiaCove\ Nerd\ Font:h16
-GuiTabline 0
-GuiPopupmenu 0
-call GuiWindowMaximized(1)
-
+if exists("g:GuiLoaded")
+	call GuiClipboard()
+	GuiFont! CaskaydiaCove\ Nerd\ Font:h16
+	GuiTabline 0
+	GuiPopupmenu 0
+	call GuiWindowMaximized(1)
+endif

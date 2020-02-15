@@ -75,11 +75,12 @@ command! Nconf :e $MYVIMRC
 command! Bc :bp | bd#
 map <A-q> :Bc<CR>
 
-" autoindent and smartindent
+" indent stuff
 set autoindent
 set smartindent
-
 set smarttab
+set expandtab
+set shiftwidth=4
 
 filetype plugin indent on
 
