@@ -5,18 +5,20 @@ Plug 'tpope/vim-surround'
 Plug 'tomasiser/vim-code-dark'
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python']
 
 Plug 'sheerun/vim-polyglot'
 
 Plug 'preservim/nerdtree'
-Plug 'preservim/nerdcommenter'
+" gc in visual, gcc to comment
+Plug 'tpope/vim-commentary'
+Plug 'bkad/CamelCaseMotion'
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
 Plug 'mhinz/vim-startify'
-Plug 'kassio/neoterm'
 Plug 'airblade/vim-rooter'
-Plug 'vimlab/split-term.vim'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
@@ -26,6 +28,11 @@ Plug 'wakatime/vim-wakatime'
 Plug 'machakann/vim-highlightedyank'
 
 Plug 'editorconfig/editorconfig-vim'
+Plug 'ryanoasis/vim-devicons'
+
+" + to zoom in, - to zoom out
+Plug 'vim-scripts/zoom.vim'
+Plug 'jiangmiao/auto-pairs'
 
 call plug#end()
 
@@ -42,8 +49,9 @@ map <C-l> <C-W>l
 " Ctrl A to open NERDTree, CD: set tree node to CWD
 map <C-A> :NERDTreeToggle<CR>
 
-" Ctrl Enter to enter terminal
-map <C-Enter> :Term<CR>
+" Ctrl C, Ctrl V
+vnoremap <C-c> "+y
+map <C-v> "+p
 
 " :Cdh to cd to the file folder
 command! Cdh :cd %:h
@@ -71,7 +79,47 @@ nnoremap <C-P> :bprev<CR>
 " disable auto rooter, call :Rooter to jump.
 let g:rooter_manual_only =1
 
-" Below are all COC config
+" Font
+set guifont=CaskaydiaCove\ Nerd\ Font:h16
+
+" Add icon to airline
+let g:airline_powerline_fonts = 1
+
+" =======
+" Toggleable terminal with C-Enter
+" ======
+let s:term_buf = 0
+let s:term_win = 0
+
+function! TermToggle(height)
+    if win_gotoid(s:term_win)
+        hide
+    else
+        new terminal
+        exec "resize ".a:height
+        try
+            exec "buffer ".s:term_buf
+            exec "bd terminal"
+        catch
+            call termopen("powershell", {"detach": 0})
+            let s:term_buf = bufnr("")
+            setlocal nonu nornu scl=no nocul
+        endtry
+        startinsert!
+        let s:term_win = win_getid()
+    endif
+endfunction
+
+
+nnoremap <C-Enter> :call TermToggle(10)<cr>
+tnoremap <C-Enter> <C-\><C-n>:call TermToggle(10)<cr>
+
+" =============================================
+" Below are all COC configs
+" ==============================================
+" Alt Shift F to format
+map <A-S-f> :Format<CR>
+"
 " if hidden is not set, TextEdit might fail.
 set hidden
 
