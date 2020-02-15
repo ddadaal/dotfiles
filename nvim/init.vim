@@ -7,7 +7,7 @@ Plug 'tomasiser/vim-code-dark'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python']
 
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 
 Plug 'preservim/nerdtree'
 " gc in visual, gcc to comment
@@ -71,13 +71,17 @@ command! Cdh :cd %:h
 " :Nconf to open init.vim
 command! Nconf :e $MYVIMRC
 
-" :Bc or Alt-q to close current buffer and show another
+" :Bc or Alt-q to close current buffer and show the previous (p) buffer
 command! Bc :bp | bd#
 map <A-q> :Bc<CR>
 
 " autoindent and smartindent
 set autoindent
 set smartindent
+
+set smarttab
+
+filetype plugin indent on
 
 " Show startify when no buffer is opened
 autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
