@@ -59,6 +59,9 @@ command! Cdh :cd %:h
 " :Nconf to open init.vim
 command! Nconf :e $MYVIMRC
 
+" autoindent and smartindent
+set autoindent
+set smartindent
 
 " Show startify when no buffer is opened
 autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
@@ -79,7 +82,7 @@ nnoremap <C-P> :bprev<CR>
 " disable auto rooter, call :Rooter to jump.
 let g:rooter_manual_only =1
 
-" Font
+" Font, NerdFont patched Cascadia Code
 set guifont=CaskaydiaCove\ Nerd\ Font:h16
 
 " Add icon to airline
