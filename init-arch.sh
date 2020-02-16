@@ -17,7 +17,7 @@ echo Setting up archlinuxcn...
 if grep -Fxq "[archlinuxcn]" /etc/pacman.conf; then
 	echo "archlinuxcn already set up"
 else
-	echo "[archlinuxcn]\n" >> /etc/pacmac.conf
+	echo "[archlinuxcn]\n" >> /etc/pacman.conf
 	echo "Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch" >> /etc/pacman.conf
 fi
 
