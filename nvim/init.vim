@@ -169,7 +169,9 @@ endfunction
 
 
 nnoremap <A-Enter> :call TermToggle(10)<cr>
+" <C-\><C-n> for exiting to normal mode
 tnoremap <A-Enter> <C-\><C-n>:call TermToggle(10)<cr>
+tnoremap <Esc> <C-\><C-n>
 
 " =============================================
 " Below are all COC configs
