@@ -4,6 +4,9 @@ if [[ $EUID -ne 0 ]]; then
 	exit 1
 fi
 
+name=ddadaal
+email=ddadaal@outlook.com
+
 echo Setting pacman mirror...
 if which pacman-mirrors 1>/dev/null 2>&1; then
     echo pacman-mirrors exists. using it to generate mirrors
@@ -17,7 +20,8 @@ echo Setting up archlinuxcn...
 if grep -Fxq "[archlinuxcn]" /etc/pacman.conf; then
 	echo "archlinuxcn already set up"
 else
-	echo "[archlinuxcn]\n" >> /etc/pacman.conf
+	echo "[archlinuxcn]" >> /etc/pacman.conf
+	echo "" >> /etc/pacman.conf
 	echo "Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch" >> /etc/pacman.conf
 fi
 
@@ -35,11 +39,17 @@ pacman -S archlinuxcn-keyring --needed
 echo Install packages...
 pacman -Syuu
 
-echo Add user? Type n to cancel, or type username or use default username: ddadaal
+echo Set git...
+git config --global user.name "$name"
+git config --global user.email "$email"
+git config --global core.autocrlf false
+git config --global credential.helper store
+
+echo Add user? Type n to cancel, or type username or use default username: "$name"
 read input
 
 if [ "$input" != "n" ]; then
-	input=${input:-ddadaal}
+	input=${input:-$name}
 	echo Press to any key to edit sudoers file.
 	echo Uncomment the line starting with %wheel...
 	read
@@ -49,5 +59,6 @@ if [ "$input" != "n" ]; then
 	echo "Set password for $input"
 	passwd $input
 fi
+
 
 echo Arch initialization complete.
