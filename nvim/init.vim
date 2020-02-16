@@ -137,7 +137,7 @@ nmap <A-.> :bnext<CR>
 let g:rooter_manual_only =1
 
 " Font, NerdFont patched Cascadia Code
-set guifont=CaskaydiaCove\ Nerd\ Font:h16
+set guifont=Cascadia\ Code\ PL:h16
 
 " Add icon to airline
 let g:airline_powerline_fonts = 1
