@@ -125,7 +125,7 @@ filetype plugin indent on
 au BufRead,BufNewFile *.MD setlocal filetype=markdown
 
 " Show startify when no buffer is opened
-autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
+" autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
 
 " Configure split-term.vim to open terminal at the bottom
 set splitbelow
