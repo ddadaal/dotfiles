@@ -1,25 +1,34 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'tpope/vim-surround'
 Plug 'tomasiser/vim-code-dark'
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python']
 
+" vim-polyglot is not compatible with coc.nvim
 " Plug 'sheerun/vim-polyglot'
 
 Plug 'preservim/nerdtree'
-" gc in visual, gcc to comment
-Plug 'tpope/vim-commentary'
+
+" <leader>cc to comment, <leader>c in visual, <leader>c<space> to toggle
+Plug 'preservim/nerdcommenter'
+
+" <leader> motion
 Plug 'bkad/CamelCaseMotion'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 Plug 'mhinz/vim-startify'
+
+" :Rooter
 Plug 'airblade/vim-rooter'
 
+" Fuzzy search
+Plug 'Yggdroot/LeaderF'
+
+" :MarkdownPreview(Stop)
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
@@ -36,8 +45,13 @@ Plug 'jiangmiao/auto-pairs'
 
 Plug 'vim-scripts/vim-auto-save'
 
+Plug 'tpope/vim-fugitive'
+
 " Disable search highlight after search
 Plug 'romainl/vim-cool'
+
+Plug 'cespare/vim-toml'
+Plug 'frazrepo/vim-rainbow'
 
 call plug#end()
 
@@ -45,25 +59,38 @@ set showmatch
 set number
 colorscheme codedark
 
+" Enable popup window for leaderf
+let g:Lf_WindowPosition = 'popup'
+
 " Show search count
 let g:CoolTotalMatches = 1
+
+" Enable rainbow parathensis
+let g:rainbow_active = 1
 
 " Enable auto save, and disable it in insert mode
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
-" Move pane in order
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" Set SPC as the leader key
+let mapleader = " " 
 
-" Ctrl A to open NERDTree, CD: set tree node to CWD
-map <C-A> :NERDTreeToggle<CR>
+" Enable camel case motion
+let g:camelcasemotion_key = '<leader>'
 
-" Ctrl C, Ctrl V
-vnoremap <C-c> "+y
-map <C-v> "+p
+" Alt + Motion: Move pane in order 
+map <A-j> <C-W>j
+map <A-k> <C-W>k
+map <A-h> <C-W>h
+map <A-l> <C-W>l
+
+" Leader A to open NERDTree, CD: set tree node to CWD
+map <A-a> :NERDTreeToggle<CR>
+
+" Ctrl C, Ctrl V, Ctrl A
+" vnoremap <C-c> "+y
+" map <C-v> "+p
+" map <C-a> ggVG
 
 " :Cdh to cd to the file folder
 command! Cdh :cd %:h
@@ -75,6 +102,9 @@ command! Nconf :e $MYVIMRC
 command! Bc :bp | bd#
 map <A-q> :Bc<CR>
 
+" Alt F to open search file
+map <A-f> :Leaderf file<CR>
+
 " indent stuff
 set autoindent
 set smartindent
@@ -82,7 +112,13 @@ set smarttab
 set expandtab
 set shiftwidth=4
 
+" when searching, input lowercase ignores case
+set smartcase
+
 filetype plugin indent on
+
+" Set MD as markdown
+au BufRead,BufNewFile *.MD setlocal filetype=markdown
 
 " Show startify when no buffer is opened
 autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
@@ -90,15 +126,12 @@ autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | St
 " Configure split-term.vim to open terminal at the bottom
 set splitbelow
 
-" Set powershell as default terminal shell
-let g:split_term_default_shell = "powershell"
-
 " Enable airline tabline
 let g:airline#extensions#tabline#enabled = 1
 
-" Ctrl-N and Ctrl-P to switch between buffers
-nnoremap <C-N> :bnext<CR>
-nnoremap <C-P> :bprev<CR>
+" <Alt>-, and <Alt>-. to switch between buffers
+nmap <A-,> :bprev<CR>
+nmap <A-.> :bnext<CR>
 
 " disable auto rooter, call :Rooter to jump.
 let g:rooter_manual_only =1
@@ -110,7 +143,7 @@ set guifont=CaskaydiaCove\ Nerd\ Font:h16
 let g:airline_powerline_fonts = 1
 
 " =======
-" Toggleable terminal with C-Enter
+" Toggleable terminal with A-Enter
 " ======
 let s:term_buf = 0
 let s:term_win = 0
@@ -135,8 +168,8 @@ function! TermToggle(height)
 endfunction
 
 
-nnoremap <C-Enter> :call TermToggle(10)<cr>
-tnoremap <C-Enter> <C-\><C-n>:call TermToggle(10)<cr>
+nnoremap <A-Enter> :call TermToggle(10)<cr>
+tnoremap <A-Enter> <C-\><C-n>:call TermToggle(10)<cr>
 
 " =============================================
 " Below are all COC configs
@@ -255,20 +288,20 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+ " Using CocList
+ " Show all diagnostics
+ nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+ " Manage extensions
+ nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+ " Show commands
+ nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+ " Find symbol of current document
+ nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+ " Search workspace symbols
+ nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+ " Do default action for next item.
+ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+ " Do default action for previous item.
+ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+ " Resume latest coc list
+ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
