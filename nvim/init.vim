@@ -17,8 +17,11 @@ Plug 'preservim/nerdcommenter'
 " <leader> motion
 Plug 'bkad/CamelCaseMotion'
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" light replacement for airline
+Plug 'itchyny/lightline.vim'
+
+" add buffers as tab line
+Plug 'ap/vim-buftabline'
 
 Plug 'mhinz/vim-startify'
 
@@ -52,6 +55,7 @@ Plug 'romainl/vim-cool'
 
 Plug 'cespare/vim-toml'
 Plug 'frazrepo/vim-rainbow'
+
 
 call plug#end()
 
@@ -127,7 +131,7 @@ autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | St
 set splitbelow
 
 " Enable airline tabline
-let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#enabled = 1
 
 " <Alt>-, and <Alt>-. to switch between buffers
 nmap <A-,> :bprev<CR>
@@ -140,11 +144,16 @@ let g:rooter_manual_only =1
 set guifont=Cascadia\ Code\ PL:h16
 
 " Add icon to airline
-let g:airline_powerline_fonts = 1
+" let g:airline_powerline_fonts = 1
 
-" =======
-" Toggleable terminal with A-Enter
-" ======
+" lightline.vim shows the mode already
+set noshowmode
+
+" disable backup files
+set noundofile
+set noswapfile
+
+" Terminal
 let s:term_buf = 0
 let s:term_win = 0
 
@@ -169,7 +178,6 @@ endfunction
 
 
 nnoremap <A-Enter> :call TermToggle(10)<cr>
-" <C-\><C-n> for exiting to normal mode
 tnoremap <A-Enter> <C-\><C-n>:call TermToggle(10)<cr>
 tnoremap <Esc> <C-\><C-n>
 
@@ -290,20 +298,20 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
- " Using CocList
- " Show all diagnostics
- nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
- " Manage extensions
- nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
- " Show commands
- nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
- " Find symbol of current document
- nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
- " Search workspace symbols
- nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
- " Do default action for next item.
- nnoremap <silent> <space>j  :<C-u>CocNext<CR>
- " Do default action for previous item.
- nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
- " Resume latest coc list
- nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
