@@ -39,12 +39,6 @@ pacman -S archlinuxcn-keyring --needed
 echo Install packages...
 pacman -Syuu
 
-echo Set git...
-git config --global user.name "$name"
-git config --global user.email "$email"
-git config --global core.autocrlf false
-git config --global credential.helper store
-
 echo Add user? Type n to cancel, or type username or use default username: "$name"
 read input
 
