@@ -42,8 +42,6 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ryanoasis/vim-devicons'
 
-" + to zoom in, - to zoom out
-Plug 'vim-scripts/zoom.vim'
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'vim-scripts/vim-auto-save'
@@ -56,6 +54,15 @@ Plug 'romainl/vim-cool'
 Plug 'cespare/vim-toml'
 Plug 'frazrepo/vim-rainbow'
 
+Plug 'mattn/emmet-vim'
+
+" typescript and javascript highlighting
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+
+" in selection, press * to find all other instances in the buffer
+" :%s//<replacement>/g to use the last search pattern and replace them
+Plug 'nelstrom/vim-visual-star-search'
 
 call plug#end()
 
@@ -125,7 +132,7 @@ filetype plugin indent on
 au BufRead,BufNewFile *.MD setlocal filetype=markdown
 
 " Show startify when no buffer is opened
-" autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
+"autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
 
 " Configure split-term.vim to open terminal at the bottom
 set splitbelow
