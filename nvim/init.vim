@@ -3,8 +3,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'tomasiser/vim-code-dark'
 
+Plug 'honza/vim-snippets'
+
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python', 'coc-snippets']
 
 " vim-polyglot is not compatible with coc.nvim
 " Plug 'sheerun/vim-polyglot'
@@ -14,7 +16,7 @@ Plug 'preservim/nerdtree'
 " <leader>cc to comment, <leader>c in visual, <leader>c<space> to toggle
 Plug 'preservim/nerdcommenter'
 
-" <leader> motion
+" <leader> motion to move cursor
 Plug 'bkad/CamelCaseMotion'
 
 " light replacement for airline
@@ -23,6 +25,7 @@ Plug 'itchyny/lightline.vim'
 " add buffers as tab line
 Plug 'ap/vim-buftabline'
 
+" :Startify to show homepage
 Plug 'mhinz/vim-startify'
 
 " :Rooter
@@ -72,6 +75,7 @@ colorscheme codedark
 
 " Enable popup window for leaderf
 let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
 
 " Show search count
 let g:CoolTotalMatches = 1
@@ -97,6 +101,9 @@ map <A-l> <C-W>l
 
 " Leader A to open NERDTree, CD: set tree node to CWD
 map <A-a> :NERDTreeToggle<CR>
+
+" Show hidden file
+let NERDTreeShowHidden = 1
 
 " Ctrl C, Ctrl V, Ctrl A
 " vnoremap <C-c> "+y
