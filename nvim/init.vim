@@ -6,7 +6,7 @@ Plug 'tomasiser/vim-code-dark'
 Plug 'honza/vim-snippets'
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python', 'coc-snippets']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python', 'coc-snippets', 'coc-omnisharp']
 
 " vim-polyglot is not compatible with coc.nvim
 " Plug 'sheerun/vim-polyglot'
@@ -66,6 +66,9 @@ Plug 'peitalin/vim-jsx-typescript'
 " in selection, press * to find all other instances in the buffer
 " :%s//<replacement>/g to use the last search pattern and replace them
 Plug 'nelstrom/vim-visual-star-search'
+
+" + zoom in, - zoom out
+Plug 'vim-scripts/zoom.vim'
 
 call plug#end()
 
