@@ -5,11 +5,11 @@ Plug 'tomasiser/vim-code-dark'
 
 Plug 'honza/vim-snippets'
 
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python', 'coc-snippets', 'coc-omnisharp']
+Plug 'sheerun/vim-polyglot'
 
-" vim-polyglot is not compatible with coc.nvim
-" Plug 'sheerun/vim-polyglot'
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python', 'coc-snippets', 'coc-omnisharp', 'coc-tabnine']
+
 
 Plug 'preservim/nerdtree'
 
@@ -33,6 +33,8 @@ Plug 'airblade/vim-rooter'
 
 " Fuzzy search
 Plug 'Yggdroot/LeaderF'
+
+Plug 'Yggdroot/indentLine'
 
 " :MarkdownPreview(Stop)
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
@@ -70,11 +72,21 @@ Plug 'nelstrom/vim-visual-star-search'
 " + zoom in, - zoom out
 Plug 'vim-scripts/zoom.vim'
 
+" Select word Ctrl-N, and then n/N to select occurrenses (q skip), [/] to select cursor(Q skip)
+" Ctrl-Down/Up to create cursors
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+" Extend %
+Plug 'andymass/vim-matchup'
+
 call plug#end()
 
 set showmatch
 set number
 colorscheme codedark
+
+" Disable ts for polyglot
+let g:polyglot_disabled = ['typescript']
 
 " Enable popup window for leaderf
 let g:Lf_WindowPosition = 'popup'
@@ -101,6 +113,9 @@ map <A-j> <C-W>j
 map <A-k> <C-W>k
 map <A-h> <C-W>h
 map <A-l> <C-W>l
+
+" Leader A to open coc-explorer
+" map <A-a> :CocCommand explorer<CR>
 
 " Leader A to open NERDTree, CD: set tree node to CWD
 map <A-a> :NERDTreeToggle<CR>
@@ -134,6 +149,7 @@ set expandtab
 set shiftwidth=4
 
 " when searching, input lowercase ignores case
+set ignorecase
 set smartcase
 
 filetype plugin indent on
@@ -156,6 +172,7 @@ nmap <A-.> :bnext<CR>
 
 " disable auto rooter, call :Rooter to jump.
 let g:rooter_manual_only =1
+let g:rooter_patterns = ['package.json',  '.git/', '*.sln']
 
 " Font, NerdFont patched Cascadia Code
 set guifont=Cascadia\ Code\ PL:h16
