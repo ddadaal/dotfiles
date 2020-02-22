@@ -33,8 +33,6 @@ Plug 'airblade/vim-rooter'
 " Fuzzy search
 Plug 'Yggdroot/LeaderF'
 
-Plug 'Yggdroot/indentLine'
-
 " :MarkdownPreview(Stop)
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
@@ -84,8 +82,14 @@ set showmatch
 set number
 colorscheme codedark
 
+" WhichKey
+" nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+
 " Disable ts for polyglot
 let g:polyglot_disabled = ['typescript']
+
+" Short highlighted yank duration
+let g:highlightedyank_highlight_duration = 200
 
 " Enable popup window for leaderf
 let g:Lf_WindowPosition = 'popup'
@@ -120,7 +124,7 @@ map <A-a> :CocCommand explorer<CR>
 " map <A-a> :NERDTreeToggle<CR>
 
 " Show hidden file
-let NERDTreeShowHidden = 1
+" let NERDTreeShowHidden = 1
 
 " Ctrl C, Ctrl V, Ctrl A
 " vnoremap <C-c> "+y
@@ -132,6 +136,7 @@ command! Cdh :cd %:h
 
 " :Nconf to open init.vim
 command! Nconf :e $MYVIMRC
+command! GNconf :e $MYVIMRC/../ginit.vim
 
 " :Bc or Alt-q to close current buffer and show the previous (p) buffer
 command! Bc :bp | bd#
@@ -174,7 +179,7 @@ let g:rooter_manual_only =1
 let g:rooter_patterns = ['package.json',  '.git/', '*.sln']
 
 " Font, NerdFont patched Cascadia Code
-set guifont=Cascadia\ Code\ PL:h16
+set guifont=Cascadia\ Code\ PL:h12
 
 " Add icon to airline
 " let g:airline_powerline_fonts = 1

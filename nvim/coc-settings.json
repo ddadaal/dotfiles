@@ -2,6 +2,5 @@
     "explorer.keyMappings": {
         "`": "gotoParent"
     },
-    "explorer.icon.enableNerdfont": true,
-    "explorer.openAction.changeDirectory": false
+    "explorer.icon.enableNerdfont": true
 }

@@ -5,10 +5,10 @@ nnoremap <silent> <C-_> :set guifont=-<CR>
 
 if exists("g:GuiLoaded")
 	call GuiClipboard()
-	GuiFont! Cascadia Code PL:h16
+	GuiFont! Cascadia Code PL:h12
 	GuiTabline 0
 	GuiPopupmenu 0
-	call GuiWindowMaximized(1)
+	call GuiWindowFullScreen(1)
 endif
 
 if exists("g:fvim_loaded")
