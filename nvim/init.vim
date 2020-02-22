@@ -8,10 +8,9 @@ Plug 'honza/vim-snippets'
 Plug 'sheerun/vim-polyglot'
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python', 'coc-snippets', 'coc-omnisharp', 'coc-tabnine']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python', 'coc-snippets', 'coc-omnisharp', 'coc-tabnine', 'coc-explorer']
 
-
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
 
 " <leader>cc to comment, <leader>c in visual, <leader>c<space> to toggle
 Plug 'preservim/nerdcommenter'
@@ -115,10 +114,10 @@ map <A-h> <C-W>h
 map <A-l> <C-W>l
 
 " Leader A to open coc-explorer
-" map <A-a> :CocCommand explorer<CR>
+map <A-a> :CocCommand explorer<CR>
 
 " Leader A to open NERDTree, CD: set tree node to CWD
-map <A-a> :NERDTreeToggle<CR>
+" map <A-a> :NERDTreeToggle<CR>
 
 " Show hidden file
 let NERDTreeShowHidden = 1
@@ -349,3 +348,21 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+" Integrate to lightline
+
+function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
+endfunction
+
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status',
+      \   'currentfunction': 'CocCurrentFunction'
+      \ },
+      \ }
