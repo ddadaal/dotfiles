@@ -8,9 +8,11 @@ Plug 'honza/vim-snippets'
 Plug 'sheerun/vim-polyglot'
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python', 'coc-snippets', 'coc-omnisharp', 'coc-tabnine', 'coc-explorer']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python', 'coc-snippets', 'coc-omnisharp', 'coc-explorer']
 
 " Plug 'preservim/nerdtree'
+"
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 " <leader>cc to comment, <leader>c in visual, <leader>c<space> to toggle
 Plug 'preservim/nerdcommenter'
@@ -371,3 +373,4 @@ let g:lightline = {
       \   'currentfunction': 'CocCurrentFunction'
       \ },
       \ }
+
