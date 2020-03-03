@@ -1,3 +1,6 @@
+" =============================================
+" plugins part
+" ==============================================
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-surround'
@@ -7,15 +10,26 @@ Plug 'honza/vim-snippets'
 
 Plug 'sheerun/vim-polyglot'
 
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-rls', 'coc-python', 'coc-snippets', 'coc-omnisharp', 'coc-explorer']
+Plug 'neoclide/coc.nvim', { 'branch': 'release' } 
+
+let g:coc_global_extensions = [
+ \ 'coc-tsserver',
+ \ 'coc-css',
+ \ 'coc-json',
+ \ 'coc-eslint',
+ \ 'coc-rust-analyzer',
+ \ 'coc-python',
+ \ 'coc-snippets',
+ \ 'coc-omnisharp',
+ \ 'coc-explorer',
+ \ ]
 
 " Plug 'preservim/nerdtree'
 "
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
-" <leader>cc to comment, <leader>c in visual, <leader>c<space> to toggle
-Plug 'preservim/nerdcommenter'
+" gcc to comment, gc in visual
+Plug 'tpope/vim-commentary'
 
 " <leader> motion to move cursor
 Plug 'bkad/CamelCaseMotion'
@@ -55,7 +69,6 @@ Plug 'tpope/vim-fugitive'
 " Disable search highlight after search
 Plug 'romainl/vim-cool'
 
-Plug 'cespare/vim-toml'
 Plug 'frazrepo/vim-rainbow'
 
 Plug 'mattn/emmet-vim'
@@ -78,7 +91,15 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 " Extend %
 Plug 'andymass/vim-matchup'
 
+" Open terminal in another pane 
+" :Term horizontally, :VTerm vertically
+Plug 'vimlab/split-term.vim'
+
 call plug#end()
+
+" =============================================
+" main part
+" ==============================================
 
 set showmatch
 set number
@@ -134,8 +155,23 @@ let g:CoolTotalMatches = 1
 let g:rainbow_active = 1
 
 " Enable auto save, and disable it in insert mode
+" Only save change on leaving insert and text change
+" :e! to forcefully reload current file if it is changed externally
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
+let g:auto_save_events = ["InsertLeave", "TextChanged"]
+
+" Auto reload file when changed
+" Triger `autoread` when files changes on disk
+" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+        \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+
+" Notification after file change
+" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 
 " Enable camel case motion
@@ -157,16 +193,17 @@ map <A-a> :CocCommand explorer<CR>
 " let NERDTreeShowHidden = 1
 
 " Ctrl C, Ctrl V, Ctrl A
-" vnoremap <C-c> "+y
-" map <C-v> "+p
-" map <C-a> ggVG
+vnoremap <C-c> "+y
+nmap <C-c> "+yy
+map <C-v> "+p
+map <C-a> ggVG
 
 " :Cdh to cd to the file folder
 command! Cdh :cd %:h
 
 " :Nconf to open init.vim
 command! Nconf :e $MYVIMRC
-command! GNconf :e $MYVIMRC/../ginit.vim
+command! Gnconf :e $MYVIMRC/../ginit.vim
 
 " :Bc or Alt-q to close current buffer and show the previous (p) buffer
 command! Bc :bp | bd#
@@ -190,9 +227,6 @@ au BufRead,BufNewFile *.MD setlocal filetype=markdown
 
 " Show startify when no buffer is opened
 "autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
-
-" Configure split-term.vim to open terminal at the bottom
-set splitbelow
 
 " Enable airline tabline
 " let g:airline#extensions#tabline#enabled = 1
@@ -218,36 +252,19 @@ set noshowmode
 set noundofile
 set noswapfile
 
-" Terminal
-let s:term_buf = 0
-let s:term_win = 0
+" Set PowerShell as default terminal
+" Will break vim-plug
+" set shell=powershell
 
-function! TermToggle(height)
-    if win_gotoid(s:term_win)
-        hide
-    else
-        new terminal
-        exec "resize ".a:height
-        try
-            exec "buffer ".s:term_buf
-            exec "bd terminal"
-        catch
-            call termopen("powershell", {"detach": 0})
-            let s:term_buf = bufnr("")
-            setlocal nonu nornu scl=no nocul
-        endtry
-        startinsert!
-        let s:term_win = win_getid()
-    endif
-endfunction
+" Set Powershell as the shell for split-term.vim
+let g:split_term_default_shell = "powershell"
 
-
-nnoremap <A-Enter> :call TermToggle(10)<cr>
-tnoremap <A-Enter> <C-\><C-n>:call TermToggle(10)<cr>
-tnoremap <Esc> <C-\><C-n>
+" :Term at below, :VTerm at right
+set splitright
+set splitbelow
 
 " =============================================
-" Below are all COC configs
+" coc.nvim part
 " ==============================================
 " Alt Shift F to format
 map <A-S-f> :Format<CR>
@@ -275,14 +292,16 @@ set signcolumn=yes
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+let g:coc_snippet_next = '<tab>'
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
@@ -318,7 +337,8 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+" Sync with VSCode
+nmap <F2> <Plug>(coc-rename)
 
 " Remap for format selected region
 "xmap <leader>f  <Plug>(coc-format-selected)
