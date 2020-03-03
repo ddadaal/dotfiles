@@ -8,8 +8,10 @@ This is my dotfiles and configuration scripts.
   - [init.vim](nvim/init.vim) 
   - [ginit.vim](nvim/ginit.vim)
   - [Windows Context Menu Registration](nvim/nvim.reg)
+  - [.vimrc](nvim/.vimcrc) for general vim configuration (simple)
 - Jetbrains vim rc
-  - [.ideavimrc](.ideavimrc)
+  - [.vimrc](.vimrc) simple general vim configuration and for VsVim
+  - [.ideavimrc](.ideavimrc) (relies on .vimrc)
 - i3
   - [i3config](i3config)
   - [i3statusconfig](i3statusconfig)
