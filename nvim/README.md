@@ -4,15 +4,17 @@
 
 Place the snippets under coc-ultisnips to `~/.config/coc/ultisnips`
 
-Note, the jump between placeholders does not work. Figuring them out now...
+Note, placeholders in ultisnips snippets do not work: cannot use `<tab>` to jump between placeholders.
 
 ## Font
 
-Cascadia Code PL is used. For Windows users, install it via
+[CaskaydiaCove NF](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/CascadiaCode) is used. 
+
+For Windows and scoop users, install it via
 
 ```
 scoop bucket add nerd-fonts
-scoop install Cascadia-PL
+scoop install CascadiaCode-NF
 ```
 
 ## Line break
