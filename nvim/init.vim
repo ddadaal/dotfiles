@@ -73,6 +73,7 @@ Plug 'frazrepo/vim-rainbow'
 Plug 'mattn/emmet-vim'
 
 " typescript and javascript highlighting
+" polyglot's yats.vim is not as good
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 
@@ -223,6 +224,7 @@ filetype plugin indent on
 
 " Set MD as markdown
 au BufRead,BufNewFile *.MD setlocal filetype=markdown
+" au BufRead,BufNewFile *.tsx setlocal filetype=typescript.tsx
 
 " Show startify when no buffer is opened
 "autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
@@ -239,7 +241,7 @@ let g:rooter_manual_only =1
 let g:rooter_patterns = ['package.json',  '.git/', '*.sln']
 
 " Font, NerdFont patched Cascadia Code
-set guifont=CaskaydiaCove\ NF:h12
+" set guifont=CaskaydiaCove\ NF:h12
 
 " Add icon to airline
 " let g:airline_powerline_fonts = 1

@@ -5,7 +5,7 @@ nnoremap <silent> <C-_> :set guifont=-<CR>
 
 if exists("g:GuiLoaded")
 	call GuiClipboard()
-	GuiFont! Cascadia Code PL:h12
+	GuiFont! CaskaydiaCove NF:h12
 	GuiTabline 0
 	GuiPopupmenu 0
 	" call GuiWindowFullScreen(1)
