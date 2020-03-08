@@ -8,7 +8,7 @@ if exists("g:GuiLoaded")
 	GuiFont! Cascadia Code PL:h12
 	GuiTabline 0
 	GuiPopupmenu 0
-	call GuiWindowFullScreen(1)
+	" call GuiWindowFullScreen(1)
 endif
 
 if exists("g:fvim_loaded")

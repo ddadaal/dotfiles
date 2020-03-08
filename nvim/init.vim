@@ -4,6 +4,7 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-surround'
+
 Plug 'tomasiser/vim-code-dark'
 
 Plug 'honza/vim-snippets'
@@ -58,8 +59,6 @@ Plug 'wakatime/vim-wakatime'
 Plug 'machakann/vim-highlightedyank'
 
 Plug 'editorconfig/editorconfig-vim'
-Plug 'ryanoasis/vim-devicons'
-
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'vim-scripts/vim-auto-save'
@@ -240,7 +239,7 @@ let g:rooter_manual_only =1
 let g:rooter_patterns = ['package.json',  '.git/', '*.sln']
 
 " Font, NerdFont patched Cascadia Code
-set guifont=Cascadia\ Code\ PL:h12
+set guifont=CaskaydiaCove\ NF:h12
 
 " Add icon to airline
 " let g:airline_powerline_fonts = 1
@@ -312,9 +311,9 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Or use `complete_info` if your vim support it, like:
 " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" Use `g[` and `g]` to navigate diagnostics
+nmap <silent> g[ <Plug>(coc-diagnostic-prev)
+nmap <silent> g] <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -337,7 +336,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
-" Sync with VSCode
+" Sync with VSCode using F2
 nmap <F2> <Plug>(coc-rename)
 
 " Remap for format selected region
