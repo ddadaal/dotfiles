@@ -21,8 +21,8 @@ let g:coc_global_extensions = [
  \ 'coc-rust-analyzer',
  \ 'coc-python',
  \ 'coc-snippets',
- \ 'coc-omnisharp',
  \ 'coc-explorer',
+ \ 'coc-omnisharp',
  \ ]
 
 " Plug 'preservim/nerdtree'
@@ -94,6 +94,8 @@ Plug 'andymass/vim-matchup'
 " Open terminal in another pane 
 " :Term horizontally, :VTerm vertically
 Plug 'vimlab/split-term.vim'
+
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
