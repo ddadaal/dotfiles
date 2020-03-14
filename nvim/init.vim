@@ -95,6 +95,15 @@ Plug 'andymass/vim-matchup'
 " :Term horizontally, :VTerm vertically
 Plug 'vimlab/split-term.vim'
 
+" s<char><char> jump to closest <char><char> occurrences
+" ; after sneak to jump to next
+" s<Enter> repeat last search
+" Plug 'justinmk/vim-sneak'
+
+" <leader><leader>w to start jumping to words
+" <leader><leader>f<char> to start jumping to <char>
+Plug 'easymotion/vim-easymotion'
+
 Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
@@ -150,6 +159,17 @@ noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
 noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
 noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 
+" easymotion config
+
+let g:EasyMotion_smartcase = 1
+
+" use easymotion to replace search
+" map  / <Plug>(easymotion-sn)
+" omap / <Plug>(easymotion-tn)
+
+" map  n <Plug>(easymotion-next)
+" map  N <Plug>(easymotion-prev)
+
 " Show search count
 let g:CoolTotalMatches = 1
 
@@ -178,6 +198,7 @@ autocmd FileChangedShellPost *
 
 " Enable camel case motion
 let g:camelcasemotion_key = '<leader>'
+
 
 " Alt + Motion: Move pane in order 
 map <A-j> <C-W>j
