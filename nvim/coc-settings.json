@@ -3,6 +3,7 @@
         "`": "gotoParent"
     },
     "explorer.icon.enableNerdfont": true,
+    "explorer.previewAction.onHover": false,
     "snippets.extends": {
         "typescriptreact": ["typescript"]
     }
