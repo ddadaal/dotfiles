@@ -116,6 +116,9 @@ set showmatch
 set number
 colorscheme codedark
 
+" disable netrw
+let loaded_netrwPlugin = 1
+
 " Set SPC as the leader key
 let mapleader = " " 
 
@@ -218,8 +221,8 @@ map <A-a> :CocCommand explorer<CR>
 " Ctrl C, Ctrl V, Ctrl A
 vnoremap <C-c> "+y
 nmap <C-c> "+yy
-map <C-v> "+p
-map <C-a> ggVG
+imap <C-v> "+p
+vmap <C-a> ggVG
 
 " :Cdh to cd to the file folder
 command! Cdh :cd %:h

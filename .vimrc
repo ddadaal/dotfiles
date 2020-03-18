@@ -3,7 +3,9 @@ set noswapfile
 set nobackup
 set nowritebackup
 
+let mapleader = " "
+
 vnoremap <C-c> "+y
 nmap <C-c> "+yy
-map <C-v> "+p
-map <C-a> ggVG
+imap <C-v> "+p
+vmap <C-a> ggVG
