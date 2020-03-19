@@ -221,7 +221,7 @@ map <A-a> :CocCommand explorer<CR>
 " Ctrl C, Ctrl V, Ctrl A
 vnoremap <C-c> "+y
 nmap <C-c> "+yy
-imap <C-v> "+p
+imap <C-v> <esc>"+pi
 vmap <C-a> ggVG
 
 " :Cdh to cd to the file folder

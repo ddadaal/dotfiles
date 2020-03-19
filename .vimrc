@@ -7,5 +7,6 @@ let mapleader = " "
 
 vnoremap <C-c> "+y
 nmap <C-c> "+yy
-imap <C-v> "+p
+imap <C-v> <esc>"+pi
 vmap <C-a> ggVG
+
