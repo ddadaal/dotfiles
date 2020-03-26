@@ -9,6 +9,8 @@ This is my dotfiles and configuration scripts.
   - [ginit.vim](nvim/ginit.vim)
   - [Windows Context Menu Registration](nvim/nvim.reg)
   - [.vimrc](nvim/.vimcrc) for general vim configuration (simple)
+- [.doom.d](.doom.d)
+  - [Doom Emacs](https://github.com/hlissner/doom-emacs) configs
 - Jetbrains vim rc
   - [.vimrc](.vimrc) simple general vim configuration and for VsVim
   - [.ideavimrc](.ideavimrc) (relies on .vimrc)
