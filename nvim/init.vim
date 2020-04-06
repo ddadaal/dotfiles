@@ -106,6 +106,9 @@ Plug 'easymotion/vim-easymotion'
 
 Plug 'ryanoasis/vim-devicons'
 
+" Color
+Plug 'ap/vim-css-color'
+
 call plug#end()
 
 " =============================================
