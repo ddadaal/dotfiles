@@ -35,3 +35,6 @@ echo "Backup existing .zshrc..."
 mv ~/.zshrc ~/.zshrc.backup
 echo "Copy .zshrc"
 cp .zshrc ~
+
+# Copy p10k conf
+cp .p10k.zsh ~/
