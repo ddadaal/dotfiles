@@ -1,17 +1,14 @@
 # Configure i3 with
-#   - fonts includiing source code pro and wqy chinese fonts
-#   - fcits as input method
-#   - urxvt as the default terminal
-#   - correct Xresources including urxvt config and dpi settings
-#   - rofi as the application launcher
-#   - firefox as the default browser
+# - desktop confs (see init-desktop.sh)
+# - urxvt as the default terminal
+# - correct Xresources including urxvt config and dpi settings
+# - rofi as the application launcher
+# - firefox as the default browser
 
-echo "Install fonts..."
-sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-han-sans-cn-fonts ttf-font-awesome ttf-dejavu --needed
+source init-desktop.sh
 
-echo "Install fcitx and input methods..."
-sudo pacman -S fcitx fcitx-configtool fcitx-im fcitx-libpinyin --needed
-cp .xprofile ~
+echo "Copy .xprofile since i3 is using X"
+cp .xprofile ~/
 
 echo "Install firefox..."
 sudo pacman -S firefox --needed
