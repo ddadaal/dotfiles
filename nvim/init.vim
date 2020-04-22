@@ -2,7 +2,6 @@
 " plugins part
 " ==============================================
 call plug#begin('~/.vim/plugged')
-
 Plug 'tpope/vim-surround'
 
 Plug 'tomasiser/vim-code-dark'
@@ -207,13 +206,19 @@ let g:camelcasemotion_key = '<leader>'
 
 
 " Alt + Motion: Move pane in order 
-map <A-j> <C-W>j
-map <A-k> <C-W>k
-map <A-h> <C-W>h
-map <A-l> <C-W>l
+nnoremap <A-j> <C-W>j
+nnoremap <A-k> <C-W>k
+nnoremap <A-h> <C-W>h
+nnoremap <A-l> <C-W>l
 
-" Leader A to open coc-explorer
-map <A-a> :CocCommand explorer<CR>
+" Alt + Left/Right/Up/Down to resize window
+noremap <A-Left> :vertical resize +3<CR>
+noremap <A-Right> :vertical resize -3<CR>
+noremap <A-Up> :resize +3<CR>
+noremap <A-Down> :resize -3<CR>
+
+" Alt e to open coc-explorer
+map <A-e> :CocCommand explorer<CR>
 
 " Leader A to open NERDTree, CD: set tree node to CWD
 " map <A-a> :NERDTreeToggle<CR>
