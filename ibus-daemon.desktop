@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=ibus-daemon
+GenericName=ibus daemon
+Exec=/usr/bin/ibus-daemon --xim
+Terminal=false
+Categories=Utility
+Type=Application
+StartupNotify=false
+X-GNOME-Autostart-enabled=true
