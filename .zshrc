@@ -75,12 +75,12 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions yarn web-search zsh-syntax-highlighting z vi-mode)
+plugins=(git zsh-autosuggestions web-search zsh-syntax-highlighting z vi-mode)
 
-source $ZSH/oh-my-zsh.sh
+[[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh
 
 # Init cargo env
-source ~/.cargo/env 
+[[ ! -f ~/.cargo/env ]] || source ~/.cargo/env 
 
 # Init nvm env
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -111,9 +111,13 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+# set EDITOR
 
-alias zshconfig="vim ~/.zshrc"
-alias i3config="vim ~/.config/i3/config"
+export EDITOR="vim"
+
+alias zshconfig="$EDITOR ~/.zshrc"
+alias i3config="$EDITOR ~/.config/i3/config"
 alias proxify="HTTP_PROXY=http://localhost:1080 HTTPS_PROXY=http://localhost:1080"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
