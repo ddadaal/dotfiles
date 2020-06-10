@@ -116,9 +116,13 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 export EDITOR="vim"
 
+# Change it to localhost if the proxy host is on localhost
+# Change it to the target IP if the machine is a virtual machine and the proxy on another machine is used
+export PROXY_HOST="10.0.0.2"
+
 alias zshconfig="$EDITOR ~/.zshrc"
 alias i3config="$EDITOR ~/.config/i3/config"
-alias proxify="HTTP_PROXY=http://localhost:1080 HTTPS_PROXY=http://localhost:1080"
+alias proxify="HTTP_PROXY=http://$PROXY_HOST:1080 HTTPS_PROXY=http://$PROXY_HOST:1080"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
