@@ -116,9 +116,11 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 export EDITOR="vim"
 
-# Change it to localhost if the proxy host is on localhost
-# Change it to the target IP if the machine is a virtual machine and the proxy on another machine is used
-export PROXY_HOST="10.0.0.2"
+# It is recommended to run the proxy on the localhost
+# At WSL2, it is suggested to run init-wsl2-proxy-forwarding.sh 
+# to set up a simple proxy that forwards requests to Windows side
+# so that all proxy config can be localhost without manual change
+export PROXY_HOST="localhost"
 
 alias zshconfig="$EDITOR ~/.zshrc"
 alias i3config="$EDITOR ~/.config/i3/config"
