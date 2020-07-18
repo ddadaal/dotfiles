@@ -123,7 +123,8 @@ export PROXY_HOST="localhost"
 alias zshconfig="$EDITOR ~/.zshrc"
 alias i3config="$EDITOR ~/.config/i3/config"
 alias tmuxconfig="$EDITOR ~/.tmux.conf"
-alias proxify="HTTP_PROXY=http://$PROXY_HOST:1080 HTTPS_PROXY=http://$PROXY_HOST:1080"
+alias proxify="export HTTP_PROXY=http://$PROXY_HOST:1080 && export HTTPS_PROXY=http://$PROXY_HOST:1080"
+alias unproxify="unset HTTP_PROXY HTTPS_PROXY"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
