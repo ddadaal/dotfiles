@@ -370,7 +370,8 @@ endfunction
 
 " Highlight symbol under cursor on CursorHold
 if exists("*CocActionAsync")
-  autocmd CursorHold * silent call CocActionAsync('highlight') endif
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+  endif
 
 " Remap for rename current word
 " Sync with VSCode using F2
