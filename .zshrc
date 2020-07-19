@@ -75,16 +75,16 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions web-search zsh-syntax-highlighting z vi-mode)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting z vi-mode)
 
 [[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh
 
 # Init cargo env
 [[ ! -f ~/.cargo/env ]] || source ~/.cargo/env 
 
+# Actually I did not need multiple versions of nvm.
 # Init nvm env
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# [[ ! -f /usr/share/nvm/init-nvm.sh ]] || source /usr/share/nvm/init-nvm.sh
 	
 # User configuration
 
@@ -118,12 +118,13 @@ export EDITOR="vim"
 
 # Change it to localhost if the proxy host is on localhost
 # Change it to the target IP if the machine is a virtual machine and the proxy on another machine is used
-export PROXY_HOST="localhost"
+export PROXY_HOST="host.docker.internal"
 
-alias zshconfig="$EDITOR ~/.zshrc"
-alias i3config="$EDITOR ~/.config/i3/config"
-alias tmuxconfig="$EDITOR ~/.tmux.conf"
-alias proxify="HTTP_PROXY=http://$PROXY_HOST:1080 HTTPS_PROXY=http://$PROXY_HOST:1080"
+alias zshconf="$EDITOR ~/.zshrc"
+alias i3conf="$EDITOR ~/.config/i3/config"
+alias tmuxconf="$EDITOR ~/.tmux.conf"
+alias proxify="export HTTP_PROXY=http://$PROXY_HOST:1080 && export HTTPS_PROXY=http://$PROXY_HOST:1080"
+alias unproxify="unset HTTP_PROXY HTTPS_PROXY"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
