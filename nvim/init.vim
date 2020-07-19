@@ -369,7 +369,8 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+if exists("*CocActionAsync")
+  autocmd CursorHold * silent call CocActionAsync('highlight') endif
 
 " Remap for rename current word
 " Sync with VSCode using F2
