@@ -4,6 +4,9 @@
     },
     "explorer.icon.enableNerdfont": true,
     "explorer.previewAction.onHover": false,
+    "explorer.file.showHiddenFiles": true,
+    "rust-analyzer.serverPath": "/usr/sbin/rust-analyzer",
+    "prettier.eslintIntegration": true,
     "snippets.extends": {
         "typescriptreact": ["typescript"]
     }
