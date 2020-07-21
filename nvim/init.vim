@@ -25,8 +25,6 @@ let g:coc_global_extensions = [
  \ ]
 
 " Plug 'preservim/nerdtree'
-"
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 " gcc to comment, gc in visual
 Plug 'tpope/vim-commentary'
@@ -59,7 +57,6 @@ Plug 'machakann/vim-highlightedyank'
 
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
-
 Plug 'vim-scripts/vim-auto-save'
 
 Plug 'tpope/vim-fugitive'
@@ -108,6 +105,9 @@ Plug 'ryanoasis/vim-devicons'
 " Color
 Plug 'ap/vim-css-color'
 
+" Relative line number at focused and in normal mode buffer
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+
 call plug#end()
 
 " =============================================
@@ -115,7 +115,7 @@ call plug#end()
 " ==============================================
 
 set showmatch
-set number
+set number relativenumber
 colorscheme codedark
 
 " disable netrw
@@ -212,10 +212,10 @@ nnoremap <A-h> <C-W>h
 nnoremap <A-l> <C-W>l
 
 " Alt + Left/Right/Up/Down to resize window
-noremap <A-Left> :vertical resize +3<CR>
-noremap <A-Right> :vertical resize -3<CR>
-noremap <A-Up> :resize +3<CR>
-noremap <A-Down> :resize -3<CR>
+nnoremap <A-S-l> :vertical resize +3<CR>
+nnoremap <A-S-h> :vertical resize -3<CR>
+nnoremap <A-S-k> :resize +3<CR>
+nnoremap <A-S-j> :resize -3<CR>
 
 " Alt e to open coc-explorer
 map <A-e> :CocCommand explorer<CR>
@@ -292,7 +292,7 @@ set noswapfile
 " set shell=powershell
 
 " Set Powershell as the shell for split-term.vim
-let g:split_term_default_shell = "powershell"
+let g:split_term_default_shell = "zsh"
 
 " :Term at below, :VTerm at right
 set splitright
