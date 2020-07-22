@@ -22,6 +22,7 @@ let g:coc_global_extensions = [
  \ 'coc-snippets',
  \ 'coc-explorer',
  \ 'coc-omnisharp',
+ \ 'coc-prettier'
  \ ]
 
 " Plug 'preservim/nerdtree'
