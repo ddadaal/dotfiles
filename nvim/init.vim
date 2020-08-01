@@ -108,6 +108,8 @@ Plug 'ap/vim-css-color'
 " Relative line number at focused and in normal mode buffer
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
+Plug 'vim-test/vim-test'
+
 call plug#end()
 
 " =============================================
