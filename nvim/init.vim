@@ -132,6 +132,11 @@ let g:polyglot_disabled = ['typescript']
 " Short highlighted yank duration
 let g:highlightedyank_highlight_duration = 300
 
+" Set the test terinalk strategy to neovim
+let test#strategy = "neovim"
+" Map <C-o> to go back to insert mode on terminal
+tmap <C-o> <C-\><C-n>
+
 " Leaderf
 " don't show the help in normal mode
 let g:Lf_HideHelp = 1
