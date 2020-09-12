@@ -1,0 +1,14 @@
+Windows Registry Editor Version 5.00
+[HKEY_CURRENT_USER\SOFTWARE\Classes\*\shell\Open with Neovim]
+@="Open with Neovim"
+"Icon"="\"C:\\Users\\ddadaal\\scoop\\apps\\neovim\\current\\bin\\nvim-qt.exe\""
+
+[HKEY_CURRENT_USER\SOFTWARE\Classes\*\shell\Open with Neovim\command]
+@="\"C:\\Users\\ddadaal\\scoop\\apps\\neovim\\current\\bin\\nvim-qt.exe\" \"%V\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\Neovim Here]
+@="Neovim here"
+"Icon"="\"C:\\Users\\ddadaal\\scoop\\apps\\neovim\\current\\bin\\nvim-qt.exe\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\Neovim Here\command]
+@="\"C:\\Users\\ddadaal\\scoop\\apps\\neovim\\current\\bin\\nvim-qt.exe\" \"%V\""
