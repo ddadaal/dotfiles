@@ -116,15 +116,17 @@ call plug#end()
 " main part
 " ==============================================
 
-set showmatch
-set number relativenumber
+" introduce .vimrc
+if has('win32')
+  source ~/_vimrc
+else
+  source ~/.vimrc
+endif
+
 colorscheme codedark
 
 " disable netrw
 let loaded_netrwPlugin = 1
-
-" Set SPC as the leader key
-let mapleader = " " 
 
 " Disable ts for polyglot
 let g:polyglot_disabled = ['typescript']
@@ -211,18 +213,8 @@ autocmd FileChangedShellPost *
 " Enable camel case motion
 let g:camelcasemotion_key = '<leader>'
 
-
 " Alt + Motion: Move pane in order 
-nnoremap <A-j> <C-W>j
-nnoremap <A-k> <C-W>k
-nnoremap <A-h> <C-W>h
-nnoremap <A-l> <C-W>l
-
 " Alt + Left/Right/Up/Down to resize window
-nnoremap <A-S-l> :vertical resize +3<CR>
-nnoremap <A-S-h> :vertical resize -3<CR>
-nnoremap <A-S-k> :resize +3<CR>
-nnoremap <A-S-j> :resize -3<CR>
 
 " Alt e to open coc-explorer
 map <A-e> :CocCommand explorer<CR>
@@ -250,17 +242,6 @@ command! Gnconf :e $MYVIMRC/../ginit.vim
 command! Bc :bp | bd#
 map <A-q> :Bc<CR>
 
-" indent stuff
-set autoindent
-set smartindent
-set smarttab
-set expandtab
-set shiftwidth=4
-
-" when searching, input lowercase ignores case
-set ignorecase
-set smartcase
-
 filetype plugin indent on
 
 " Set MD as markdown
@@ -274,8 +255,6 @@ au BufRead,BufNewFile *.MD setlocal filetype=markdown
 " let g:airline#extensions#tabline#enabled = 1
 
 " <Alt>-, and <Alt>-. to switch between buffers
-nmap <A-,> :bprev<CR>
-nmap <A-.> :bnext<CR>
 
 " disable auto rooter, call :Rooter to jump.
 let g:rooter_manual_only =1
@@ -290,33 +269,21 @@ let g:rooter_patterns = ['package.json',  '.git/', '*.sln']
 " lightline.vim shows the mode already
 set noshowmode
 
-" disable backup files
-set noundofile
-set noswapfile
-
-" Set PowerShell as default terminal
-" Will break vim-plug
+" Setting PowerShell as default terminal will break vim-plug
 " set shell=powershell
 
 " Set Powershell as the shell for split-term.vim
-let g:split_term_default_shell = "zsh"
-
-" :Term at below, :VTerm at right
-set splitright
-set splitbelow
+if has('win32')
+  let g:split_term_default_shell = "pwsh"
+else
+  let g:split_term_default_shell = "zsh"
+endif
 
 " =============================================
 " coc.nvim part
 " ==============================================
 " Alt Shift F to format
 map <A-S-f> :Format<CR>
-"
-" if hidden is not set, TextEdit might fail.
-set hidden
-
-" Some servers have issues with backup files, see #649
-set nobackup
-set nowritebackup
 
 " Better display for messages
 set cmdheight=1
