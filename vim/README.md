@@ -29,8 +29,8 @@ $XDG_CONFIG_HOME="$HOME\.config"
 $env:XDG_CONFIG_HOME = $XDG_CONFIG_HOME
 New-Item -ItemType Directory -Force -Path $XDG_CONFIG_HOME
 
-# Setting nvim configs by creating symbolic link
-New-Item -ItemType SymbolicLink -Path $env:XDG_CONFIG_HOME -Name "nvim" -Target "$((Resolve-Path .\nvim).Path)"
+# Setting nvim configs by creating symbolic link to this folder
+New-Item -ItemType SymbolicLink -Path $env:XDG_CONFIG_HOME -Name "nvim" -Target "$((Resolve-Path .).Path)"
 
 # Install vim-plug for neovim
 iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
