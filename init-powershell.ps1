@@ -10,15 +10,15 @@ if (!(Test-Path -Path $PROFILE )) { New-Item -Type File -Path $PROFILE -Force }
 Add-Content -Path $PROFILE -Value @"
 Import-Module posh-git
 Import-Module oh-my-posh
-Set-Theme $THEME
+Set-Theme `$THEME
 
 function proxify {
-        $env:HTTP_PROXY="http://127.0.0.1:1080"
-        $env:HTTPS_PROXY="http://127.0.0.1:1080"
+        `$env:HTTP_PROXY="http://127.0.0.1:1080"
+        `$env:HTTPS_PROXY="http://127.0.0.1:1080"
 }
 
 function unproxify {
-        $env:HTTP_PROXY=$null
-        $env:HTTPS_PROXY=$null
+        `$env:HTTP_PROXY=`$null
+        `$env:HTTPS_PROXY=`$null
 }
 "@
