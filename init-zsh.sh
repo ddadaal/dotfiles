@@ -7,7 +7,7 @@ if [ "$EUID" -eq 0 ]; then
 fi
 
 # Install git and zsh
-sudo pacman -S git zsh --needed
+sudo pacman -S git zsh paru --needed
 
 # Install antigen
 paru -S antigen
