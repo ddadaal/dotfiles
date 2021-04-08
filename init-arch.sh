@@ -47,7 +47,7 @@ if [ "$input" != "n" ]; then
 	echo Press to any key to edit sudoers file.
 	echo Uncomment the line starting with %wheel...
 	read
-	visudo 
+	EDITOR=vim visudo 
 	echo Add user $input to group wheel...
 	useradd -m $input -G wheel
 	echo "Set password for $input"

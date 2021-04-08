@@ -7,7 +7,7 @@ if [ "$EUID" -eq 0 ]; then
 fi
 
 # Install git and zsh
-sudo pacman -S git zsh paru --needed
+sudo pacman -S git zsh paru binutils --needed
 
 # Install antigen
 paru -S antigen
@@ -22,5 +22,8 @@ cp .zshrc ~
 
 # Copy p10k conf
 cp .p10k.zsh ~/
+
+# Change default shell to zsh
+chsh $(id -nu) -s /bin/zsh
 
 echo "Run zsh to init"
