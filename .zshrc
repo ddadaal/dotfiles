@@ -31,3 +31,5 @@ alias unproxify="unset HTTP_PROXY HTTPS_PROXY"
 [[ ! -f ~/.cargo/env ]] || source ~/.cargo/env 
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export PATH=$PATH:$HOME/.local/bin
