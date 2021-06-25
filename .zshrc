@@ -32,4 +32,4 @@ alias unproxify="unset HTTP_PROXY HTTPS_PROXY"
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.emacs.d/bin
