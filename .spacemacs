@@ -560,6 +560,10 @@ before packages are loaded.")
           ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
                 ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
 
+(setq browse-url-generic-program 
+      (executable-find (getenv "BROWSER")) 
+      browse-url-browser-function 'browse-url-generic)
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 
