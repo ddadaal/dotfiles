@@ -60,3 +60,11 @@
   :config
   (setq pyim-default-scheme 'xiaohe-shuangpin)
 )
+
+(map! "M-S-f" '+format/buffer)
+
+(use-package! tree-sitter
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
