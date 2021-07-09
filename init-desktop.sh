@@ -4,7 +4,7 @@
 
 
 echo "Install fonts..."
-sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-han-sans-cn-fonts ttf-font-awesome ttf-dejavu nerd-fonts-complete noto-fonts-cjk --needed
+sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-han-sans-cn-fonts ttf-font-awesome ttf-dejavu nerd-fonts-cascadia-code noto-fonts-cjk --needed
 
 echo "Install fcitx and input methods..."
 sudo pacman -S fcitx fcitx-configtool fcitx-im fcitx-rime --needed
