@@ -9,7 +9,13 @@ sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhe
 echo "Install fcitx and input methods..."
 sudo pacman -S fcitx fcitx-configtool fcitx-im fcitx-rime --needed
 
-echo "To configure fcitx, copy .xprofile to ~ on X, or copy the contents of .xprofile to /etc/environments on wayland"
+echo "Run the following if on X:"
+echo "cp .xprofile ~/"
+echo ""
+echo "Run the following if on Wayland"
+echo "sudo su"
+echo "cat .xprofile >> /etc/environment"
+
 echo "If on GNOME, install https://extensions.gnome.org/extension/261/kimpanel/ for better desktop environment integration"
 echo "Now entering fcitx-config-gtk3."
 fcitx-config-gtk3
