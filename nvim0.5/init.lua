@@ -1,22 +1,47 @@
-local execute = vim.api.nvim_command
+-- Bootstrap packer.nvim local execute = vim.api.nvim_command
 local fn = vim.fn
 
--- verb object
-
--- Bootstrap paq
-local install_path = fn.stdpath('data') .. '/site/pack/paqs/start/paq-nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', 'https://github.com/savq/paq-nvim.git', install_path})
+    fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
+    execute 'packadd packer.nvim'
 end
 
 -- Plugins
 
-require('paq-nvim') {'savq/paq-nvim', 'neovim/nvim-lspconfig', 'kabouzeid/nvim-lspinstall', 'nvim-lua/popup.nvim',
-                     'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim', 'nvim-treesitter/nvim-treesitter',
-                     'hrsh7th/nvim-compe', 'kyazdani42/nvim-web-devicons', 'hoob3rt/lualine.nvim',
-                     'Mofiqul/vscode.nvim', 'kyazdani42/nvim-tree.lua', 'glepnir/lspsaga.nvim', 'cohama/lexima.vim',
-                     'nvim-lua/lsp-status.nvim', 'liuchengxu/vim-which-key', 'AckslD/nvim-whichkey-setup.lua'}
+require('packer').startup(function()
+    use 'wbthomason/packer.nvim'
+    use 'neovim/nvim-lspconfig'
+    use 'kabouzeid/nvim-lspinstall'
+    use {
+        'nvim-telescope/telescope.nvim',
+        'windwp/nvim-spectre',
+        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+    }
+    use 'nvim-treesitter/nvim-treesitter'
+    use 'hrsh7th/nvim-compe'
+    use 'kyazdani42/nvim-web-devicons'
+    use 'hoob3rt/lualine.nvim'
+    use 'Mofiqul/vscode.nvim'
+    use 'kyazdani42/nvim-tree.lua'
+    use 'glepnir/lspsaga.nvim'
+    use 'cohama/lexima.vim'
+    use 'nvim-lua/lsp-status.nvim'
+    use {
+        'AckslD/nvim-whichkey-setup.lua',
+        requires = {'liuchengxu/vim-which-key'}
+    }
+    use 'ahmedkhalf/lsp-rooter.nvim'
+    -- use 'wakatime/vim-wakatime'
+    use 'jamestthompson3/nvim-remote-containers'
+    use {
+        'glepnir/dashboard-nvim',
+        config = function()
+            vim.g.dashboard_default_executive = "telescope"
+        end
+    }
+end)
 
 -- Globals
 
@@ -25,6 +50,8 @@ vim.cmd [[
     set number
     set relativenumber
     command! Nconf :e $MYVIMRC
+    set splitright
+    set splitbelow
 ]]
 
 -- Lua Line
@@ -67,8 +94,8 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    buf_set_keymap('n', 'g[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', 'g]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 
     -- Set some keybinds conditional on server capabilities
@@ -137,13 +164,6 @@ vim.cmd [[
     inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 ]]
 
--- nvimtree.lua
-
-vim.cmd [[
-    nnoremap <leader>ft :NvimTreeToggle<CR>
-    nnoremap <leader>fr :NvimTreeRefresh<CR>
-]]
-
 -- lspsaga.nvim
 -- local saga = require 'saga'
 -- saga.init_lsp_saga()
@@ -157,7 +177,7 @@ vim.g.vscode_style = "dark"
 vim.cmd [[colorscheme vscode]]
 
 -- Keybindings
-local keymap = {
+local leader_keymap = {
     f = {
         name = "+file",
         t = {'<Cmd>NvimTreeToggle<CR>', "Toggle NvimTree"},
@@ -166,8 +186,42 @@ local keymap = {
         g = {'<cmd>lua require(\'telescope.builtin\').live_grep()<cr>', "Telescope Live Grep"},
         b = {'<cmd>lua require(\'telescope.builtin\').buffers()<cr>', "Telescope Buffers"},
         h = {'<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', "Telescope Help Tags"}
-    }
+    },
+    r = {
+        name = "+replace",
+        f = {"<cmd>lua require('spectre').open_file_search()<cr>", "Current File"},
+        p = {"<cmd>lua require('spectre').open()<cr>", "Project"}
+    },
+    w = {
+        name = "+window",
+        h = {"<C-W>h", "Focus the window at left"},
+        j = {"<C-W>j", "Focus the window down"},
+        k = {"<C-W>k", "Focus the window up"},
+        l = {"<C-W>l", "Focus the window at right"},
+        d = {"<C-W>q", "Close current window"},
+        ['-'] = {"<Cmd>split<CR>", "Make a horizontal split"},
+        ['/'] = {"<Cmd>vsplit<CR>", "Make a vertical split"}
+    },
+    g = {
+        name = "+git",
+        g = {"<cmd>Telescope git_status<cr>", "Open changed file"}
+    },
+    h = {"<cmd>nohl<cr>", "No Highlight"}
 }
 
-require("whichkey_setup").register_keymap('leader', keymap)
+vim.cmd [[
+    vnoremap <C-c> "+y
+    nmap <C-c> "+yy
+    imap <C-v> <esc>"+pi
+    vmap <C-a> ggVG
+]]
 
+local whichkey = require 'whichkey_setup'
+whichkey.register_keymap('leader', leader_keymap)
+
+-- nvim-spectre
+require('spectre').setup({
+    color_devicons = true
+})
+
+-- nvim-remote-containers
