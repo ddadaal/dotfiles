@@ -1,4 +1,5 @@
--- Bootstrap packer.nvim local execute = vim.api.nvim_command
+-- Bootstrap packer.nvim 
+local execute = vim.api.nvim_command 
 local fn = vim.fn
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -10,18 +11,19 @@ end
 
 -- Plugins
 
-require('packer').startup(function()
+require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'neovim/nvim-lspconfig'
     use 'kabouzeid/nvim-lspinstall'
+    use 'kyazdani42/nvim-web-devicons'
     use {
         'nvim-telescope/telescope.nvim',
         'windwp/nvim-spectre',
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
     }
     use 'nvim-treesitter/nvim-treesitter'
+    use 'p00f/nvim-ts-rainbow'
     use 'hrsh7th/nvim-compe'
-    use 'kyazdani42/nvim-web-devicons'
     use 'hoob3rt/lualine.nvim'
     use 'Mofiqul/vscode.nvim'
     use 'kyazdani42/nvim-tree.lua'
@@ -33,17 +35,26 @@ require('packer').startup(function()
         requires = {'liuchengxu/vim-which-key'}
     }
     use 'ahmedkhalf/lsp-rooter.nvim'
-    -- use 'wakatime/vim-wakatime'
+    use 'wakatime/vim-wakatime'
     use 'jamestthompson3/nvim-remote-containers'
     use {
         'glepnir/dashboard-nvim',
-        config = function()
-            vim.g.dashboard_default_executive = "telescope"
-        end
     }
+
+    use "tpope/vim-surround"
+    use {
+        'machakann/vim-highlightedyank',
+    }
+    use 'editorconfig/editorconfig-vim'
+    use 'simeji/winresizer'
+    use 'terryma/vim-multiple-cursors'
+    use 'jreybert/vimagit'
 end)
 
 -- Globals
+
+vim.g.dashboard_default_executive = "telescope"
+vim.g.highlightedyank_highlight_duration = 200
 
 vim.g.mapleader = " "
 vim.cmd [[
@@ -52,7 +63,17 @@ vim.cmd [[
     command! Nconf :e $MYVIMRC
     set splitright
     set splitbelow
+
+    set shiftwidth=4
+    set autoindent
+    set smartindent
+    set smarttab
+    set expandtab
+
+    set ignorecase
+    set smartcase
 ]]
+
 
 -- Lua Line
 require('lualine').setup {
@@ -84,7 +105,7 @@ local on_attach = function(client, bufnr)
     }
     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', 'gh', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
@@ -93,16 +114,16 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    -- buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
     buf_set_keymap('n', 'g[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', 'g]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 
     -- Set some keybinds conditional on server capabilities
     if client.resolved_capabilities.document_formatting then
-        buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+        buf_set_keymap("n", "A-S-F", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     elseif client.resolved_capabilities.document_range_formatting then
-        buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+        buf_set_keymap("n", "A-S-F", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
     end
 
     -- Set autocommands conditional on server_capabilities
@@ -131,7 +152,12 @@ end
 
 local lspconfig = require('lspconfig')
 
-local servers = {'tsserver', 'pyright', 'gopls'}
+local lspinstall = require'lspinstall'
+
+lspinstall.setup()
+
+local servers = lspinstall.installed_servers()
+-- local servers = { 'tsserver', 'sumneko_lua' }
 
 for _, server in pairs(servers) do
     local config = make_config()
@@ -178,10 +204,9 @@ vim.cmd [[colorscheme vscode]]
 
 -- Keybindings
 local leader_keymap = {
+    e = {'<Cmd>NvimTreeToggle<CR>', "Toggle NvimTree"},
     f = {
         name = "+file",
-        t = {'<Cmd>NvimTreeToggle<CR>', "Toggle NvimTree"},
-        r = {'<Cmd>NvimTreeRefresh<CR>', "Refresh NvimTree"},
         f = {'<cmd>lua require(\'telescope.builtin\').find_files()<cr>', "Telescope Find File"},
         g = {'<cmd>lua require(\'telescope.builtin\').live_grep()<cr>', "Telescope Live Grep"},
         b = {'<cmd>lua require(\'telescope.builtin\').buffers()<cr>', "Telescope Buffers"},
@@ -199,29 +224,35 @@ local leader_keymap = {
         k = {"<C-W>k", "Focus the window up"},
         l = {"<C-W>l", "Focus the window at right"},
         d = {"<C-W>q", "Close current window"},
-        ['-'] = {"<Cmd>split<CR>", "Make a horizontal split"},
-        ['/'] = {"<Cmd>vsplit<CR>", "Make a vertical split"}
     },
     g = {
         name = "+git",
-        g = {"<cmd>Telescope git_status<cr>", "Open changed file"}
+        s = {"<cmd>Magit<cr>", "Open Magit"}
     },
-    h = {"<cmd>nohl<cr>", "No Highlight"}
+    h = {"<cmd>nohlsearch<cr>", "No Highlight"}
 }
 
 vim.cmd [[
     vnoremap <C-c> "+y
     nmap <C-c> "+yy
     imap <C-v> <esc>"+pi
-    vmap <C-a> ggVG
+    nmap <C-a> ggVG
 ]]
+
 
 local whichkey = require 'whichkey_setup'
 whichkey.register_keymap('leader', leader_keymap)
 
 -- nvim-spectre
-require('spectre').setup({
-    color_devicons = true
-})
+require('spectre').setup({})
 
 -- nvim-remote-containers
+
+-- treesitter
+require'nvim-treesitter.configs'.setup {
+  rainbow = {
+    enable = true,
+    extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
+    max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
+  }
+}
