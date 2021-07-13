@@ -1,5 +1,4 @@
--- Bootstrap packer.nvim 
-local execute = vim.api.nvim_command 
+local execute = vim.api.nvim_command
 local fn = vim.fn
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -24,17 +23,15 @@ require('packer').startup(function(use)
     use 'nvim-treesitter/nvim-treesitter'
     use 'p00f/nvim-ts-rainbow'
     use 'hrsh7th/nvim-compe'
+    use 'nvim-lua/lsp-status.nvim'
     use 'hoob3rt/lualine.nvim'
     use 'Mofiqul/vscode.nvim'
     use 'kyazdani42/nvim-tree.lua'
-    use 'glepnir/lspsaga.nvim'
     use 'cohama/lexima.vim'
-    use 'nvim-lua/lsp-status.nvim'
     use {
         'AckslD/nvim-whichkey-setup.lua',
         requires = {'liuchengxu/vim-which-key'}
     }
-    use 'ahmedkhalf/lsp-rooter.nvim'
     use 'wakatime/vim-wakatime'
     use 'jamestthompson3/nvim-remote-containers'
     use {
@@ -49,12 +46,20 @@ require('packer').startup(function(use)
     use 'simeji/winresizer'
     use 'terryma/vim-multiple-cursors'
     use 'jreybert/vimagit'
+    use 'vim-test/vim-test'
+    use 'b3nj5m1n/kommentary'
+
+    use 'vimlab/split-term.vim'
+
+    -- plugin end
 end)
 
 -- Globals
 
 vim.g.dashboard_default_executive = "telescope"
 vim.g.highlightedyank_highlight_duration = 200
+
+-- vim.g["test#strategy"] = "dispatch"
 
 vim.g.mapleader = " "
 vim.cmd [[
@@ -64,6 +69,8 @@ vim.cmd [[
     set splitright
     set splitbelow
 
+    set mouse=a
+
     set shiftwidth=4
     set autoindent
     set smartindent
@@ -72,6 +79,9 @@ vim.cmd [[
 
     set ignorecase
     set smartcase
+
+    set wrap
+    set linebreak
 ]]
 
 
@@ -108,11 +118,12 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', 'gh', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    --[[ buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
     buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts) ]]
     buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     -- buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
     buf_set_keymap('n', 'g[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
@@ -121,9 +132,9 @@ local on_attach = function(client, bufnr)
 
     -- Set some keybinds conditional on server capabilities
     if client.resolved_capabilities.document_formatting then
-        buf_set_keymap("n", "A-S-F", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+        buf_set_keymap("n", "<A-S-f>", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     elseif client.resolved_capabilities.document_range_formatting then
-        buf_set_keymap("n", "A-S-F", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+        buf_set_keymap("n", "<A-S-f>", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
     end
 
     -- Set autocommands conditional on server_capabilities
@@ -190,14 +201,6 @@ vim.cmd [[
     inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 ]]
 
--- lspsaga.nvim
--- local saga = require 'saga'
--- saga.init_lsp_saga()
-
--- vim.cmd [[
---     nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
--- ]]
-
 -- Theme
 vim.g.vscode_style = "dark"
 vim.cmd [[colorscheme vscode]]
@@ -237,7 +240,14 @@ vim.cmd [[
     nmap <C-c> "+yy
     imap <C-v> <esc>"+pi
     nmap <C-a> ggVG
+
+    nnoremap <A-j> <C-W>j
+    nnoremap <A-k> <C-W>k
+    nnoremap <A-h> <C-W>h
+    nnoremap <A-l> <C-W>l
 ]]
+
+
 
 
 local whichkey = require 'whichkey_setup'
@@ -255,4 +265,30 @@ require'nvim-treesitter.configs'.setup {
     extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
     max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
   }
+}
+
+-- comment
+-- require('nvim_comment').setup()
+-- vim.cmd [[
+--     nnoremap <c-_> <cmd>commenttoggle<cr>
+--     vnoremap <c-_> <cmd>commenttoggle<cr>
+-- ]]
+
+vim.api.nvim_set_keymap("n", "<C-_>", "<Plug>kommentary_line_default", {})
+vim.api.nvim_set_keymap("x", "<C-_>", "<Plug>kommentary_visual_default", {})
+
+
+-- tree
+vim.g.nvim_tree_auto_open = 1
+vim.g.nvim_tree_auto_close = 1
+vim.g.nvim_tree_lsp_diagnostics = 1
+
+vim.cmd [[
+    set termguicolors
+]]
+
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+-- allow l to enter a file
+vim.g.nvim_tree_bindings = {
+    { key = 'l', cb = tree_cb("edit") },
 }
