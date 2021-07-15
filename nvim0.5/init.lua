@@ -15,6 +15,8 @@ require('packer').startup(function(use)
     use 'neovim/nvim-lspconfig'
     use 'kabouzeid/nvim-lspinstall'
     use 'kyazdani42/nvim-web-devicons'
+    use 'nvim-lua/popup.nvim'
+    use 'nvim-lua/plenary.nvim'
     use {
         'nvim-telescope/telescope.nvim',
         'windwp/nvim-spectre',
@@ -222,11 +224,16 @@ local leader_keymap = {
     },
     w = {
         name = "+window",
+        a = {":WinResizerStartResize<cr>"},
         h = {"<C-W>h", "Focus the window at left"},
         j = {"<C-W>j", "Focus the window down"},
         k = {"<C-W>k", "Focus the window up"},
         l = {"<C-W>l", "Focus the window at right"},
         d = {"<C-W>q", "Close current window"},
+        L = {"<C-W>L", "Move the window to the right"},
+        H = {"<C-W>L", "Move the window to the left"},
+        J = {"<C-W>L", "Move the window down"},
+        K = {"<C-W>L", "Move the window up"},
     },
     g = {
         name = "+git",
