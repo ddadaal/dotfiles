@@ -61,7 +61,7 @@ end)
 vim.g.dashboard_default_executive = "telescope"
 vim.g.highlightedyank_highlight_duration = 200
 
--- vim.g["test#strategy"] = "dispatch"
+vim.g["test#strategy"] = "neovim"
 
 vim.g.mapleader = " "
 vim.cmd [[
