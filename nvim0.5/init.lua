@@ -25,8 +25,10 @@ require('packer').startup(function(use)
     use 'nvim-treesitter/nvim-treesitter'
     use 'p00f/nvim-ts-rainbow'
     use 'hrsh7th/nvim-compe'
+    use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp-status.nvim'
     use 'hoob3rt/lualine.nvim'
+    use {'ojroques/nvim-hardline'}
     use 'Mofiqul/vscode.nvim'
     use 'kyazdani42/nvim-tree.lua'
     use 'cohama/lexima.vim'
@@ -53,10 +55,21 @@ require('packer').startup(function(use)
 
     use 'vimlab/split-term.vim'
 
+    use 'hrsh7th/vim-vsnip'
+    use 'hrsh7th/vim-vsnip-integ'
+
+    use '907th/vim-auto-save'
+
+    use "lukas-reineke/indent-blankline.nvim"
+
+    use 'akinsho/nvim-bufferline.lua'
+
     -- plugin end
 end)
 
 -- Globals
+
+vim.g.auto_save = 1
 
 vim.g.dashboard_default_executive = "telescope"
 vim.g.highlightedyank_highlight_duration = 200
@@ -84,6 +97,9 @@ vim.cmd [[
 
     set wrap
     set linebreak
+
+    inoremap <C-w> <C-\><C-o>dB
+    inoremap <C-BS> <C-\><C-o>db
 ]]
 
 
@@ -98,6 +114,11 @@ require('lualine').setup {
 }
 
 -- LSP Config
+
+-- auto competion icon
+require('lspkind').init({
+    preset = 'codicons',
+})
 
 -- keymaps
 local on_attach = function(client, bufnr)
@@ -155,6 +176,14 @@ end
 local function make_config()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.resolveSupport = {
+      properties = {
+        'documentation',
+        'detail',
+        'additionalTextEdits',
+      }
+    }
+
     return {
         -- enable snippet support
         capabilities = capabilities,
@@ -189,8 +218,7 @@ require'compe'.setup {
         nvim_lsp = true,
         nvim_lua = true,
         vsnip = true,
-        ultisnips = true
-    }
+    },
 }
 
 vim.cmd [[
@@ -202,6 +230,57 @@ vim.cmd [[
     inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
     inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 ]]
+
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local check_back_space = function()
+    local col = vim.fn.col('.') - 1
+    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function(orig_key)
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif vim.fn['vsnip#available'](1) == 1 then
+    return t "<Plug>(vsnip-expand-or-jump)"
+  elseif check_back_space() then
+    return t(orig_key)
+  else
+    return vim.fn['compe#complete']()
+  end
+end
+
+_G.s_tab_complete = function(orig_key)
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  elseif vim.fn['vsnip#jumpable'](-1) == 1 then
+    return t "<Plug>(vsnip-jump-prev)"
+  else
+    -- If <S-Tab> is not working in your terminal, change it to <C-h>
+    return t(orig_key)
+  end
+end
+
+local map_tab_complete = function(key)
+    vim.api.nvim_set_keymap("i", key, "v:lua.tab_complete('" .. key .. "')", {expr = true})
+    vim.api.nvim_set_keymap("s", key, "v:lua.tab_complete('" .. key .. "')", {expr = true})
+end
+
+local map_s_tab_complete = function(key)
+    vim.api.nvim_set_keymap("i", key, "v:lua.s_tab_complete('" .. key .. "')", {expr = true})
+    vim.api.nvim_set_keymap("s", key, "v:lua.s_tab_complete('" .. key .. "')", {expr = true})
+end
+
+map_tab_complete("<C-j>")
+map_tab_complete("<Tab>")
+
+map_s_tab_complete("<C-k>")
+map_s_tab_complete("<S-Tab>")
 
 -- Theme
 vim.g.vscode_style = "dark"
@@ -239,7 +318,11 @@ local leader_keymap = {
         name = "+git",
         s = {"<cmd>Magit<cr>", "Open Magit"}
     },
-    h = {"<cmd>nohlsearch<cr>", "No Highlight"}
+    h = {"<cmd>nohlsearch<cr>", "No Highlight"},
+    b = {
+        name = "+buffer",
+        d = {"<cmd>bdelete<cr>", "Delete a buffer"}
+    }
 }
 
 vim.cmd [[
@@ -299,3 +382,74 @@ local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 vim.g.nvim_tree_bindings = {
     { key = 'l', cb = tree_cb("edit") },
 }
+
+-- bufferline
+require'bufferline'.setup{
+	options = {
+            indicator_icon = ' ',
+            buffer_close_icon = '',
+            modified_icon = '●',
+            close_icon = '',
+            close_command = "bdelete %d",
+            right_mouse_command = "bdelete! %d",
+            left_trunc_marker = '',
+            right_trunc_marker = '',
+            offsets = {{filetype = "NvimTree", text = "EXPLORER", text_align = "center"}},
+            show_tab_indicators = true,
+            show_close_icon = false,
+            diagnostics = "nvim_lsp",
+	},
+	highlights = {
+		fill = {
+			guifg = {attribute = "fg", highlight = "Normal"},
+			guibg = {attribute = "bg", highlight = "StatusLineNC"},
+		},
+		background = {
+			guifg = {attribute = "fg", highlight = "Normal"},
+			guibg = {attribute = "bg", highlight = "StatusLine"}
+		},
+		buffer_visible = {
+			gui = "",
+            guifg = {attribute = "fg", highlight="Normal"},
+            guibg = {attribute = "bg", highlight = "Normal"}
+		},
+		buffer_selected = {
+			gui = "",
+            guifg = {attribute = "fg", highlight="Normal"},
+            guibg = {attribute = "bg", highlight = "Normal"}
+		},
+		separator = {
+			guifg = {attribute = "bg", highlight = "Normal"},
+			guibg = {attribute = "bg", highlight = "StatusLine"},
+		},
+		separator_selected = {
+            guifg = {attribute = "fg", highlight="Special"},
+            guibg = {attribute = "bg", highlight = "Normal"}
+		},
+		separator_visible = {
+			guifg = {attribute = "fg", highlight = "Normal"},
+			guibg = {attribute = "bg", highlight = "StatusLineNC"},
+		},
+		close_button = {
+			guifg = {attribute = "fg", highlight = "Normal"},
+			guibg = {attribute = "bg", highlight = "StatusLine"}
+		},
+		close_button_selected = {
+            guifg = {attribute = "fg", highlight="normal"},
+            guibg = {attribute = "bg", highlight = "normal"}
+		},
+		close_button_visible = {
+            guifg = {attribute = "fg", highlight="normal"},
+            guibg = {attribute = "bg", highlight = "normal"}
+		},
+
+	}
+}
+-- indent blankline
+vim.cmd [[
+set listchars=space:⋅
+let g:indent_blankline_space_char_blankline = " "
+let g:indent_blankline_show_end_of_line = v:true
+]]
+
+
