@@ -1,8 +1,8 @@
 Install-Module posh-git -Scope CurrentUser
 Install-Module oh-my-posh -Scope CurrentUser
+Install-Module ZLocation -Scope CurrentUser
 
-Set-Prompt
-Set-Theme "Honukai"
+Set-PoshPrompt -Theme Honukai
 
 if (!(Test-Path -Path $PROFILE )) { New-Item -Type File -Path $PROFILE -Force }
 
