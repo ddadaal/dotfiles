@@ -20,7 +20,8 @@ export EDITOR="vim"
 
 # Change it to localhost if the proxy host is on localhost
 # Change it to the target IP if the machine is a virtual machine and the proxy on another machine is used
-export PROXY_HOST="127.0.0.1"
+# export PROXY_HOST="127.0.0.1"
+export PROXY_HOST="yoga-ddadaal.local"
 
 alias zshconf="$EDITOR ~/.zshrc"
 alias i3conf="$EDITOR ~/.config/i3/config"
@@ -38,5 +39,11 @@ source_if_exists ~/.cargo/env
 
 source_if_exists ~/.p10k.zsh
 
-export PATH=$PATH:$HOME/.local/bin:$HOME/.emacs.d/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.emacs.d/bin:$HOME/.cargo/bin
 export BROWSER="/mnt/c/Program Files (x86)/Microsoft/Edge Dev/Application/msedge.exe"
+export DISPLAY="$PROXY_HOST:0.0"
+export XDG_RUNTIME_DIR=/tmp/xdg_runtime_dir
+export RUNLEVEL=3
+
+source /usr/share/mcfly/mcfly.zsh
+
