@@ -63,6 +63,7 @@ require('packer').startup(function(use)
     use "lukas-reineke/indent-blankline.nvim"
 
     use 'akinsho/nvim-bufferline.lua'
+    use 'romgrk/nvim-treesitter-context'
 
     -- plugin end
 end)
@@ -447,9 +448,14 @@ require'bufferline'.setup{
 }
 -- indent blankline
 vim.cmd [[
-set listchars=space:⋅
-let g:indent_blankline_space_char_blankline = " "
-let g:indent_blankline_show_end_of_line = v:true
+    set listchars=space:⋅
+    let g:indent_blankline_space_char_blankline = " "
+    let g:indent_blankline_show_end_of_line = v:true
+    let g:indentLine_fileTypeExclude = ['dashboard']
 ]]
 
+require'treesitter-context'.setup{
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    throttle = true, -- Throttles plugin updates (may improve performance)
+}
 
