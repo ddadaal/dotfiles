@@ -65,6 +65,17 @@ require('packer').startup(function(use)
     use 'akinsho/nvim-bufferline.lua'
     use 'romgrk/nvim-treesitter-context'
 
+    use 'folke/lsp-colors.nvim'
+    use {
+        'folke/trouble.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function() 
+            require("trouble").setup {
+
+            }
+        end
+    }
+
     -- plugin end
 end)
 
@@ -311,9 +322,9 @@ local leader_keymap = {
         l = {"<C-W>l", "Focus the window at right"},
         d = {"<C-W>q", "Close current window"},
         L = {"<C-W>L", "Move the window to the right"},
-        H = {"<C-W>L", "Move the window to the left"},
-        J = {"<C-W>L", "Move the window down"},
-        K = {"<C-W>L", "Move the window up"},
+        H = {"<C-W>H", "Move the window to the left"},
+        J = {"<C-W>J", "Move the window down"},
+        K = {"<C-W>K", "Move the window up"},
     },
     g = {
         name = "+git",
@@ -322,7 +333,9 @@ local leader_keymap = {
     h = {"<cmd>nohlsearch<cr>", "No Highlight"},
     b = {
         name = "+buffer",
-        d = {"<cmd>bdelete<cr>", "Delete a buffer"}
+        d = {"<cmd>bdelete<cr>", "Delete a buffer"},
+        p = {":bp<cr>", "Previous Buffer"},
+        n = {":bn<cr>", "Next Buffer"},
     }
 }
 
@@ -458,4 +471,7 @@ require'treesitter-context'.setup{
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
     throttle = true, -- Throttles plugin updates (may improve performance)
 }
+
+
+
 
