@@ -381,6 +381,9 @@ vim.cmd [[
     nnoremap <A-l> <C-W>l
 
     nnoremap <A-e> <Cmd>NvimTreeToggle<CR>
+
+    nmap > >>
+    nmap < <<
 ]]
 
 
