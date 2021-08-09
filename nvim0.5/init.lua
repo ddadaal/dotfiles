@@ -1,4 +1,4 @@
-local execute = vim.api.nvim_command
+local execute = vim.api.nvim_command 
 local fn = vim.fn
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -22,13 +22,24 @@ require('packer').startup(function(use)
         'windwp/nvim-spectre',
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
     }
-    use 'nvim-treesitter/nvim-treesitter'
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+              rainbow = {
+                enable = true,
+                extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
+                max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
+              }
+            }
+        end
+    }
+
     use 'p00f/nvim-ts-rainbow'
     use 'hrsh7th/nvim-compe'
     use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp-status.nvim'
     use 'hoob3rt/lualine.nvim'
-    use {'ojroques/nvim-hardline'}
     use 'Mofiqul/vscode.nvim'
     use 'kyazdani42/nvim-tree.lua'
     use 'cohama/lexima.vim'
@@ -63,7 +74,16 @@ require('packer').startup(function(use)
     use "lukas-reineke/indent-blankline.nvim"
 
     use 'akinsho/nvim-bufferline.lua'
-    use 'romgrk/nvim-treesitter-context'
+
+    use {
+        'romgrk/nvim-treesitter-context',
+        config = function()
+            require'treesitter-context'.setup{
+                enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+                throttle = true, -- Throttles plugin updates (may improve performance)
+            }
+        end
+    }
 
     use 'folke/lsp-colors.nvim'
     use {
@@ -75,6 +95,8 @@ require('packer').startup(function(use)
             }
         end
     }
+
+    use "tversteeg/registers.nvim"
 
     -- plugin end
 end)
@@ -167,9 +189,9 @@ local on_attach = function(client, bufnr)
 
     -- Set some keybinds conditional on server capabilities
     if client.resolved_capabilities.document_formatting then
-        buf_set_keymap("n", "<A-S-f>", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+        buf_set_keymap("n", "<A-F>", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     elseif client.resolved_capabilities.document_range_formatting then
-        buf_set_keymap("n", "<A-S-f>", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+        buf_set_keymap("n", "<A-F>", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
     end
 
     -- Set autocommands conditional on server_capabilities
@@ -300,13 +322,18 @@ vim.cmd [[colorscheme vscode]]
 
 -- Keybindings
 local leader_keymap = {
-    e = {'<Cmd>NvimTreeToggle<CR>', "Toggle NvimTree"},
+    -- e = {'<Cmd>NvimTreeToggle<CR>', "Toggle NvimTree"},
+    e = { 
+        name = "+error",
+        l = {":Trouble<cr>", "List Troubles"},
+    },
     f = {
         name = "+file",
         f = {'<cmd>lua require(\'telescope.builtin\').find_files()<cr>', "Telescope Find File"},
         g = {'<cmd>lua require(\'telescope.builtin\').live_grep()<cr>', "Telescope Live Grep"},
         b = {'<cmd>lua require(\'telescope.builtin\').buffers()<cr>', "Telescope Buffers"},
-        h = {'<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', "Telescope Help Tags"}
+        h = {'<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', "Telescope Help Tags"},
+        t = {'<Cmd>NvimTreeToggle<CR>', "Toggle NvimTree"},
     },
     r = {
         name = "+replace",
@@ -330,12 +357,15 @@ local leader_keymap = {
         name = "+git",
         s = {"<cmd>Magit<cr>", "Open Magit"}
     },
-    h = {"<cmd>nohlsearch<cr>", "No Highlight"},
     b = {
         name = "+buffer",
-        d = {"<cmd>bdelete<cr>", "Delete a buffer"},
+        d = {":bp | bd#<cr>", "Delete a buffer"},
         p = {":bp<cr>", "Previous Buffer"},
         n = {":bn<cr>", "Next Buffer"},
+    },
+    s = {
+        name = "+search",
+        c = {"<cmd>nohlsearch<cr>", "Clear Search Highlight"},
     }
 }
 
@@ -349,6 +379,8 @@ vim.cmd [[
     nnoremap <A-k> <C-W>k
     nnoremap <A-h> <C-W>h
     nnoremap <A-l> <C-W>l
+
+    nnoremap <A-e> <Cmd>NvimTreeToggle<CR>
 ]]
 
 
@@ -363,13 +395,6 @@ require('spectre').setup({})
 -- nvim-remote-containers
 
 -- treesitter
-require'nvim-treesitter.configs'.setup {
-  rainbow = {
-    enable = true,
-    extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
-    max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
-  }
-}
 
 -- comment
 -- require('nvim_comment').setup()
@@ -386,6 +411,7 @@ vim.api.nvim_set_keymap("x", "<C-_>", "<Plug>kommentary_visual_default", {})
 vim.g.nvim_tree_auto_open = 1
 vim.g.nvim_tree_auto_close = 1
 vim.g.nvim_tree_lsp_diagnostics = 1
+vim.g.nvim_tree_auto_ignore_ft = { "dashboard" }
 
 vim.cmd [[
     set termguicolors
@@ -467,10 +493,6 @@ vim.cmd [[
     let g:indentLine_fileTypeExclude = ['dashboard']
 ]]
 
-require'treesitter-context'.setup{
-    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-    throttle = true, -- Throttles plugin updates (may improve performance)
-}
 
 
 
