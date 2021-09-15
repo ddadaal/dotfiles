@@ -1,6 +1,5 @@
 Import-Module posh-git
 Import-Module oh-my-posh
-Import-Module ZLocation
 Set-PoshPrompt -Theme Honukai
 
 function proxify {
