@@ -3,5 +3,21 @@ source ~/.vimrc
 set easymotion
 set surround
 set commentary
+set highlightedyank
 set vim-multiple-cursors
-:map gh :action ShowErrorDescription<CR>
+
+let g:highlightedyank_highlight_duration = "200"
+
+map gh <Action>(ShowErrorDescription)
+map <leader><leader> <Action>(GotoFile)
+
+
+sethandler <C-v> n-v:vim i:ide
+sethandler <C-p> a:ide
+sethandler <C-[> a:ide
+sethandler <C-]> a:ide
+sethandler <C-c> a:ide
+sethandler <C-x> a:ide
+sethandler <C-a> a:ide
+sethandler <C-f> a:ide
+sethandler <C-n> a:vim
