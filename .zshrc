@@ -9,10 +9,11 @@ antigen use oh-my-zsh
 antigen theme romkatv/powerlevel10k
 
 antigen bundle git
-antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zdharma-continuum/fast-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle jeffreytse/zsh-vi-mode
 antigen bundle z
+antigen bundle command-not-found
 
 antigen apply
 
@@ -40,10 +41,19 @@ source_if_exists ~/.cargo/env
 source_if_exists ~/.p10k.zsh
 
 export PATH=$PATH:$HOME/.local/bin:$HOME/.emacs.d/bin:$HOME/.cargo/bin
-export BROWSER="/mnt/c/Program Files (x86)/Microsoft/Edge Dev/Application/msedge.exe"
+export BROWSER="/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
 export DISPLAY="$PROXY_HOST:0.0"
 export XDG_RUNTIME_DIR=/tmp/xdg_runtime_dir
 export RUNLEVEL=3
 
-source /usr/share/mcfly/mcfly.zsh
+# eval "$(mcfly init zsh)"
 
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/home/ddadaal/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
+#
+alias dc="docker compose"
