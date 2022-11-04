@@ -22,13 +22,14 @@ export EDITOR="vim"
 # Change it to localhost if the proxy host is on localhost
 # Change it to the target IP if the machine is a virtual machine and the proxy on another machine is used
 # export PROXY_HOST="127.0.0.1"
-export PROXY_HOST="yoga-ddadaal.local"
+export PROXY_HOST="$(hostname).local"
+export PROXY_PORT=1080
 
 alias zshconf="$EDITOR ~/.zshrc"
 alias i3conf="$EDITOR ~/.config/i3/config"
 alias tmuxconf="$EDITOR ~/.tmux.conf"
-alias proxify="export HTTP_PROXY=http://$PROXY_HOST:1080 && export HTTPS_PROXY=http://$PROXY_HOST:1080"
-alias unproxify="unset HTTP_PROXY HTTPS_PROXY"
+alias proxify="export HTTP_PROXY=http://$PROXY_HOST:$PROXY_PORT && export HTTPS_PROXY=$HTTP_PROXY && export http_proxy=$HTTP_PROXY && export https_proxy=$HTTP_PROXY"
+alias unproxify="unset HTTP_PROXY HTTPS_PROXY http_proxy https_proxy"
 
 function source_if_exists {
 	[[ ! -f $1 ]] || source $1
