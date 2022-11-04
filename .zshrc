@@ -25,10 +25,12 @@ export EDITOR="vim"
 export PROXY_HOST="$(hostname).local"
 export PROXY_PORT=1080
 
+PROXY_URL="http://$PROXY_HOST:$PROXY_PORT"
+
 alias zshconf="$EDITOR ~/.zshrc"
 alias i3conf="$EDITOR ~/.config/i3/config"
 alias tmuxconf="$EDITOR ~/.tmux.conf"
-alias proxify="export HTTP_PROXY=http://$PROXY_HOST:$PROXY_PORT && export HTTPS_PROXY=$HTTP_PROXY && export http_proxy=$HTTP_PROXY && export https_proxy=$HTTP_PROXY"
+alias proxify="export HTTP_PROXY=$PROXY_URL && export HTTPS_PROXY=$PROXY_URL && export http_proxy=$PROXY_URL && export https_proxy=$PROXY_URL"
 alias unproxify="unset HTTP_PROXY HTTPS_PROXY http_proxy https_proxy"
 
 function source_if_exists {
