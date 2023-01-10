@@ -2,9 +2,8 @@
 # - Fonts (Chinese fonts, nerd-fonts-complete and more)
 # - fcitx (more configuration is needed)
 
-
 echo "Install fonts..."
-sudo pacman -S adobe-source-code-pro-fonts wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-han-sans-cn-fonts ttf-font-awesome ttf-dejavu nerd-fonts-cascadia-code noto-fonts-cjk --needed
+./init-fonts.sh
 
 echo "Install fcitx and input methods..."
 sudo pacman -S fcitx fcitx-configtool fcitx-im fcitx-rime --needed
@@ -20,7 +19,6 @@ echo "If on GNOME, install https://extensions.gnome.org/extension/261/kimpanel/ 
 echo "Now entering fcitx-config-gtk3."
 fcitx-config-gtk3
 
-
 # echo "Install ibus and rime"
 # sudo pacman -S ibus-rime ibus --needed
 
@@ -34,4 +32,3 @@ fcitx-config-gtk3
 # ibus-setup
 
 # echo "Add the Rime IME in Settings - Region & Language - Input Sources"
-
